@@ -273,7 +273,7 @@
     <div class="leader-section"><h3>Most Attending</h3><div id="topApps" style="display:grid;grid-template-columns:1fr 1fr;gap:0 24px;"></div></div>
   </div>
   <div style="margin-top:28px">
-    <div class="leader-section"><h3>Great Saves (GK &amp; DF)</h3><div id="topGS"></div></div>
+    <div class="leader-section"><h3>Great Saves </h3><div id="topGS"></div></div>
   </div>
 </div>
 
@@ -332,7 +332,7 @@
     <div class="field"><label>League / Competition</label><input id="fm-league" placeholder="e.g. Rec League A" /></div>
     <div class="field"><label>Goal Scorers — enter goals per player</label><div class="player-num-list" id="fm-scorers-list"></div></div>
     <div class="field"><label>Assists — enter assists per player</label><div class="player-num-list" id="fm-assists-list"></div></div>
-    <div class="field"><label>Great Saves — GK &amp; DF only</label><div class="player-num-list" id="fm-saves-list"></div></div>
+    <div class="field"><label>Great Saves — </label><div class="player-num-list" id="fm-saves-list"></div></div>
     <div class="field"><label>Attendance — uncheck absent players</label><div class="player-check-list" id="fm-attend-list"></div></div>
     <div class="modal-actions">
       <button class="btn btn-ghost" onclick="closeModal('modal-add-match')">Cancel</button>
@@ -669,7 +669,7 @@ function renderLeaders(){
       <div class="leader-val">${val}</div>
     </div>`;
   };
-  const topGS=[...players].filter(p=>p.pos==='GK'||p.pos==='DF').sort((a,b)=>(b.gs||0)-(a.gs||0)).slice(0,6);
+  const topGS=[...players].sort((a,b)=>(b.gs||0)-(a.gs||0)).slice(0,6);
   const maxGS=Math.max(1,...topGS.map(p=>p.gs||0));
   document.getElementById('topScorers').innerHTML=topG.map((p,i)=>lrow(p,p.goals,maxG,i+1)).join('');
   document.getElementById('topAssists').innerHTML=topA.map((p,i)=>lrow(p,p.assists,maxA,i+1)).join('');
@@ -744,7 +744,7 @@ function addMatch(){
     const sg=document.getElementById('sc-'+p.id); if(sg&&parseInt(sg.value)>0) scorerMap[p.id]=parseInt(sg.value);
     const ag=document.getElementById('as-'+p.id); if(ag&&parseInt(ag.value)>0) assistMap[p.id]=parseInt(ag.value);
   });
-  players.filter(p=>p.pos==='GK'||p.pos==='DF').forEach(p=>{
+  players.forEach(p=>{
     const sv=document.getElementById('sv-'+p.id); if(sv&&parseInt(sv.value)>0) saverMap[p.id]=parseInt(sv.value);
   });
   // Read attendance checkboxes
@@ -875,7 +875,7 @@ function _openModal(id){
     if(sl) sl.innerHTML=players.map(p=>`<div class="player-num-item"><span class="mini-num">${numDisplay(p.num)}</span><span class="p-name">${p.name}</span><input type="number" min="0" max="20" value="0" id="sc-${p.id}" style="width:52px"></div>`).join('');
     if(al) al.innerHTML=players.map(p=>`<div class="player-num-item"><span class="mini-num">${numDisplay(p.num)}</span><span class="p-name">${p.name}</span><input type="number" min="0" max="20" value="0" id="as-${p.id}" style="width:52px"></div>`).join('');
     const svl=document.getElementById('fm-saves-list');
-    if(svl) svl.innerHTML=players.filter(p=>p.pos==='GK'||p.pos==='DF').map(p=>`<div class="player-num-item"><span class="mini-num">${numDisplay(p.num)}</span><span class="p-name">${p.name} <span style="color:var(--text3);font-size:11px">${p.pos}</span></span><input type="number" min="0" max="50" value="0" id="sv-${p.id}" style="width:52px"></div>`).join('');
+    if(svl) svl.innerHTML=players.map(p=>`<div class="player-num-item"><span class="mini-num">${numDisplay(p.num)}</span><span class="p-name">${p.name} <span style="color:var(--text3);font-size:11px">${p.pos}</span></span><input type="number" min="0" max="50" value="0" id="sv-${p.id}" style="width:52px"></div>`).join('');
     const atl=document.getElementById('fm-attend-list');
     if(atl) atl.innerHTML=players.map(p=>`<label class="player-check-item"><input type="checkbox" name="attend" value="${p.id}" checked><span class="mini-num">${numDisplay(p.num)}</span>${p.name}</label>`).join('');
   }
