@@ -275,6 +275,9 @@
   <div style="margin-top:28px">
     <div class="leader-section"><h3>Great Saves </h3><div id="topGS"></div></div>
   </div>
+  <div style="margin-top:28px">
+    <div class="leader-section"><h3>Shots on Goal</h3><div id="topSOG"></div></div>
+  </div>
 </div>
 
 <div class="section" id="sec-videos">
@@ -333,6 +336,7 @@
     <div class="field"><label>Goal Scorers — enter goals per player</label><div class="player-num-list" id="fm-scorers-list"></div></div>
     <div class="field"><label>Assists — enter assists per player</label><div class="player-num-list" id="fm-assists-list"></div></div>
     <div class="field"><label>Great Saves — </label><div class="player-num-list" id="fm-saves-list"></div></div>
+    <div class="field"><label>Shots on Goal — enter shots per player</label><div class="player-num-list" id="fm-sog-list"></div></div>
     <div class="field"><label>Attendance — uncheck absent players</label><div class="player-check-list" id="fm-attend-list"></div></div>
     <div class="modal-actions">
       <button class="btn btn-ghost" onclick="closeModal('modal-add-match')">Cancel</button>
@@ -443,23 +447,23 @@ function setSyncStatus(state, label) {
 
 // ── Default data ─────────────────────────────────────────────
 const DEFAULT_PLAYERS = [
-  {id:1,  name:'Alexander',  num:21,  pos:'GK', league:'', apps:0, goals:0, assists:0, gs:0},
-  {id:2,  name:'Maximilian', num:12,  pos:'FW', league:'', apps:0, goals:0, assists:0, gs:0},
-  {id:3,  name:'Amelia',     num:13,  pos:'MF', league:'', apps:0, goals:0, assists:0, gs:0},
-  {id:4,  name:'Samantha',   num:6,   pos:'FW', league:'', apps:0, goals:0, assists:0, gs:0},
-  {id:5,  name:'Hudson',     num:9,   pos:'DF', league:'', apps:0, goals:0, assists:0, gs:0},
-  {id:6,  name:'Moisses',    num:15,  pos:'FW', league:'', apps:0, goals:0, assists:0, gs:0},
-  {id:7,  name:'Liam',       num:67,  pos:'DF', league:'', apps:0, goals:0, assists:0, gs:0},
-  {id:8,  name:'Jeremiah',   num:3,   pos:'DF', league:'', apps:0, goals:0, assists:0, gs:0},
-  {id:9,  name:'Florence',   num:87,  pos:'MF', league:'', apps:0, goals:0, assists:0, gs:0},
-  {id:10, name:'Joshiah',    num:19,  pos:'MF', league:'', apps:0, goals:0, assists:0, gs:0},
-  {id:11, name:'Addyson',    num:23,  pos:'DF', league:'', apps:0, goals:0, assists:0, gs:0},
-  {id:12, name:'Vivienne',   num:14,  pos:'DF', league:'', apps:0, goals:0, assists:0, gs:0},
-  {id:13, name:'Isla',       num:1,   pos:'FW', league:'', apps:0, goals:0, assists:0, gs:0},
-  {id:14, name:'Carter',     num:5,   pos:'DF', league:'', apps:0, goals:0, assists:0, gs:0},
-  {id:15, name:'Savannah',   num:4,   pos:'MF', league:'', apps:0, goals:0, assists:0, gs:0},
-  {id:16, name:'Quinn',      num:8,   pos:'DF', league:'', apps:0, goals:0, assists:0, gs:0},
-  {id:17, name:'Ayden',      num:7,   pos:'DF', league:'', apps:0, goals:0, assists:0, gs:0},
+  {id:1,  name:'Alexander',  num:21,  pos:'GK', league:'', apps:0, goals:0, assists:0, gs:0, sog:0},
+  {id:2,  name:'Maximilian', num:12,  pos:'FW', league:'', apps:0, goals:0, assists:0, gs:0, sog:0},
+  {id:3,  name:'Amelia',     num:13,  pos:'MF', league:'', apps:0, goals:0, assists:0, gs:0, sog:0},
+  {id:4,  name:'Samantha',   num:6,   pos:'FW', league:'', apps:0, goals:0, assists:0, gs:0, sog:0},
+  {id:5,  name:'Hudson',     num:9,   pos:'DF', league:'', apps:0, goals:0, assists:0, gs:0, sog:0},
+  {id:6,  name:'Moisses',    num:15,  pos:'FW', league:'', apps:0, goals:0, assists:0, gs:0, sog:0},
+  {id:7,  name:'Liam',       num:67,  pos:'DF', league:'', apps:0, goals:0, assists:0, gs:0, sog:0},
+  {id:8,  name:'Jeremiah',   num:3,   pos:'DF', league:'', apps:0, goals:0, assists:0, gs:0, sog:0},
+  {id:9,  name:'Florence',   num:87,  pos:'DF', league:'', apps:0, goals:0, assists:0, gs:0, sog:0},
+  {id:10, name:'Joshiah',    num:19,  pos:'FW', league:'', apps:0, goals:0, assists:0, gs:0, sog:0},
+  {id:11, name:'Addyson',    num:23,  pos:'DF', league:'', apps:0, goals:0, assists:0, gs:0, sog:0},
+  {id:12, name:'Vivienne',   num:14,  pos:'DF', league:'', apps:0, goals:0, assists:0, gs:0, sog:0},
+  {id:13, name:'Isla',       num:1,   pos:'FW', league:'', apps:0, goals:0, assists:0, gs:0, sog:0},
+  {id:14, name:'Carter',     num:5,   pos:'DF', league:'', apps:0, goals:0, assists:0, gs:0, sog:0},
+  {id:15, name:'Savannah',   num:4,   pos:'MF', league:'', apps:0, goals:0, assists:0, gs:0, sog:0},
+  {id:16, name:'Quinn',      num:8,   pos:'DF', league:'', apps:0, goals:0, assists:0, gs:0, sog:0},
+  {id:17, name:'Ayden',      num:7,   pos:'FW', league:'', apps:0, goals:0, assists:0, gs:0, sog:0},
 ];
 const DEFAULT_SCHEDULE = [
   {id:1,opponent:'Volley FC',              date:'Mar 22',time:'1:00 PM', ha:'Away',loc:'IAC Field 2',league:'U11/12'},
@@ -677,6 +681,11 @@ function renderLeaders(){
   const gsEl=document.getElementById('topGS');
   if(gsEl) gsEl.style.cssText='display:grid;grid-template-columns:1fr 1fr;gap:0 24px;';
   if(gsEl) gsEl.innerHTML=topGS.map((p,i)=>lrow(p,p.gs||0,maxGS,i+1)).join('');
+  const topSOG=[...players].sort((a,b)=>(b.sog||0)-(a.sog||0)).slice(0,6);
+  const maxSOG=Math.max(1,...topSOG.map(p=>p.sog||0));
+  const sogEl=document.getElementById('topSOG');
+  if(sogEl) sogEl.style.cssText='display:grid;grid-template-columns:1fr 1fr;gap:0 24px;';
+  if(sogEl) sogEl.innerHTML=topSOG.map((p,i)=>lrow(p,p.sog||0,maxSOG,i+1)).join('');
 }
 
 function renderVideos(){
@@ -747,15 +756,21 @@ function addMatch(){
   players.forEach(p=>{
     const sv=document.getElementById('sv-'+p.id); if(sv&&parseInt(sv.value)>0) saverMap[p.id]=parseInt(sv.value);
   });
+  const sogMap={};
+  players.forEach(p=>{
+    const sg=document.getElementById('sog-'+p.id); if(sg&&parseInt(sg.value)>0) sogMap[p.id]=parseInt(sg.value);
+  });
   // Read attendance checkboxes
   const attendedIds=[...document.querySelectorAll('#fm-attend-list input:checked')].map(x=>parseInt(x.value));
-  matches.unshift({id:nextMid++,opponent:opp,goalsFor:gf,goalsAgainst:ga,date,league,scorerMap,assistMap,saverMap,attended:attendedIds});
+  matches.unshift({id:nextMid++,opponent:opp,goalsFor:gf,goalsAgainst:ga,date,league,scorerMap,assistMap,saverMap,sogMap,attended:attendedIds});
   // Apply goals
   Object.entries(scorerMap).forEach(([id,n])=>{ const p=players.find(x=>x.id===parseInt(id)); if(p) p.goals+=n; });
   // Apply assists
   Object.entries(assistMap).forEach(([id,n])=>{ const p=players.find(x=>x.id===parseInt(id)); if(p) p.assists+=n; });
   // Apply saves
   Object.entries(saverMap).forEach(([id,n])=>{ const p=players.find(x=>x.id===parseInt(id)); if(p) p.gs=(p.gs||0)+n; });
+  // Apply shots on goal
+  Object.entries(sogMap).forEach(([id,n])=>{ const p=players.find(x=>x.id===parseInt(id)); if(p) p.sog=(p.sog||0)+n; });
   // Apply attendance
   attendedIds.forEach(id=>{ const p=players.find(x=>x.id===id); if(p) p.apps++; });
   closeModal('modal-add-match');
@@ -763,7 +778,7 @@ function addMatch(){
   document.getElementById('fm-date').value='';
   document.getElementById('fm-league').value='';
   // Reset number inputs
-  document.querySelectorAll('#fm-scorers-list input[type=number], #fm-assists-list input[type=number], #fm-saves-list input[type=number]').forEach(i=>i.value=0);
+  document.querySelectorAll('#fm-scorers-list input[type=number], #fm-assists-list input[type=number], #fm-saves-list input[type=number], #fm-sog-list input[type=number]').forEach(i=>i.value=0);
   saveAll();
 }
 
@@ -876,6 +891,8 @@ function _openModal(id){
     if(al) al.innerHTML=players.map(p=>`<div class="player-num-item"><span class="mini-num">${numDisplay(p.num)}</span><span class="p-name">${p.name}</span><input type="number" min="0" max="20" value="0" id="as-${p.id}" style="width:52px"></div>`).join('');
     const svl=document.getElementById('fm-saves-list');
     if(svl) svl.innerHTML=players.map(p=>`<div class="player-num-item"><span class="mini-num">${numDisplay(p.num)}</span><span class="p-name">${p.name} <span style="color:var(--text3);font-size:11px">${p.pos}</span></span><input type="number" min="0" max="50" value="0" id="sv-${p.id}" style="width:52px"></div>`).join('');
+    const sogl=document.getElementById('fm-sog-list');
+    if(sogl) sogl.innerHTML=players.map(p=>`<div class="player-num-item"><span class="mini-num">${numDisplay(p.num)}</span><span class="p-name">${p.name}</span><input type="number" min="0" max="50" value="0" id="sog-${p.id}" style="width:52px"></div>`).join('');
     const atl=document.getElementById('fm-attend-list');
     if(atl) atl.innerHTML=players.map(p=>`<label class="player-check-item"><input type="checkbox" name="attend" value="${p.id}" checked><span class="mini-num">${numDisplay(p.num)}</span>${p.name}</label>`).join('');
   }
@@ -897,6 +914,8 @@ function undoLastMatch(){
     Object.entries(last.assistMap||{}).forEach(([id,n])=>{ const p=players.find(x=>x.id===parseInt(id)); if(p) p.assists=Math.max(0,p.assists-n); });
     // Reverse saves
     Object.entries(last.saverMap||{}).forEach(([id,n])=>{ const p=players.find(x=>x.id===parseInt(id)); if(p) p.gs=Math.max(0,(p.gs||0)-n); });
+    // Reverse shots on goal
+    Object.entries(last.sogMap||{}).forEach(([id,n])=>{ const p=players.find(x=>x.id===parseInt(id)); if(p) p.sog=Math.max(0,(p.sog||0)-n); });
     // Reverse attendance
     (last.attended||[]).forEach(id=>{ const p=players.find(x=>x.id===id); if(p) p.apps=Math.max(0,p.apps-1); });
     saveAll();
