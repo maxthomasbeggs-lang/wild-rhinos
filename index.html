@@ -236,7 +236,7 @@
   </div>
   <div class="table-wrap">
     <table>
-      <thead><tr><th>#</th><th>Player</th><th>Att</th><th>Goals</th><th>Assists</th><th>G+A</th><th>GS</th></tr></thead>
+      <thead><tr><th>#</th><th>Player</th><th>Att</th><th>Goals</th><th>Assists</th><th>SOG</th><th>G+A</th><th>GS</th></tr></thead>
       <tbody id="squadBody"></tbody>
     </table>
   </div>
@@ -590,7 +590,7 @@ function renderSquad(){
       <td><div class="player-cell"><div class="avatar" style="background:${c.bg};color:${c.fg}">${initials(p.name)}</div>
         <div><div class="player-name">${p.name}</div><div class="player-pos">${p.pos}</div></div></div></td>
       <td>${p.apps}</td><td><strong style="color:#f47c2a">${p.goals}</strong></td>
-      <td>${p.assists}</td><td><strong>${p.goals+p.assists}</strong></td>
+      <td>${p.assists}</td><td>${p.sog||0}</td><td><strong>${p.goals+p.assists}</strong></td>
       <td><strong style="color:#60a5fa">${p.gs||0}</strong></td>
     </tr>`;
   }).join('');
