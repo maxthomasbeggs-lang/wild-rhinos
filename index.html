@@ -313,6 +313,26 @@
     <div class="section-top-left"><h2>Upcoming <span>Schedule</span></h2><p>Future fixtures and events</p></div>
     <button class="btn btn-primary" onclick="openModal('add-game')">+ Add Game</button>
   </div>
+
+  <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:16px 20px;margin-bottom:16px;">
+    <div style="font-size:13px;font-weight:600;color:var(--text);margin-bottom:4px;">📅 Add the Full Season to Your Calendar</div>
+    <p style="font-size:12px;color:var(--text3);line-height:1.6;margin-bottom:12px;">Exports every upcoming game and practice — with times and location — in one go.</p>
+    <div style="display:flex;gap:10px;flex-wrap:wrap;">
+      <button class="btn btn-ghost" onclick="downloadScheduleICS()">⬇ Download for Apple Calendar / Outlook</button>
+      <button class="btn btn-ghost" onclick="exportToGoogleCalendar()">Add to Google Calendar</button>
+    </div>
+    <p style="font-size:11px;color:var(--text3);line-height:1.6;margin-top:10px;">
+      <strong style="color:var(--text2)">Apple/Outlook:</strong> a file downloads — open it and your calendar app will ask to add every event.<br>
+      <strong style="color:var(--text2)">Google:</strong> click the button — it downloads the same file <em>and</em> opens Google Calendar's import page for you.
+    </p>
+    <ol id="cal-steps-google" style="display:none;font-size:12px;color:var(--text2);line-height:1.9;margin:12px 0 0 18px;">
+      <li>A file named <strong>WildRhinos-Schedule.ics</strong> just downloaded to your Downloads folder.</li>
+      <li>A new tab just opened to Google Calendar's Import &amp; Export page.</li>
+      <li>In that tab, click <strong>"Select file from your computer"</strong> and choose the file you just downloaded.</li>
+      <li>Choose which calendar to add the events to, then click <strong>Import</strong>.</li>
+    </ol>
+  </div>
+
   <div id="scheduleList"></div>
 </div>
 
@@ -870,6 +890,111 @@ function addMatch(){
   // Reset number inputs
   document.querySelectorAll('#fm-scorers-list input[type=number], #fm-assists-list input[type=number], #fm-saves-list input[type=number]').forEach(i=>i.value=0);
   saveAll();
+}
+
+// ── Calendar export (Apple/Outlook .ics + Google Calendar) ────
+const CAL_MONTH_IDX={Jan:0,Feb:1,Mar:2,Apr:3,May:4,Jun:5,Jul:6,Aug:7,Sep:8,Oct:9,Nov:10,Dec:11};
+const CAL_SEASON_YEAR=2026; // matches the year assumed elsewhere in the app's date parsing
+const CAL_PRACTICE_LOCATION='11801 E 32nd St S, Independence, MO 64052';
+
+function pad2(n){ return String(n).padStart(2,'0'); }
+
+function icsEscape(str){
+  return String(str||'').replace(/\\/g,'\\\\').replace(/;/g,'\\;').replace(/,/g,'\\,').replace(/\n/g,'\\n');
+}
+
+function parseClockTime(str){
+  // "6:00 PM" -> {h:18,m:0}; returns null if it can't find a time
+  const m=String(str||'').match(/(\d{1,2}):(\d{2})\s*([AaPp][Mm])/);
+  if(!m) return null;
+  let h=parseInt(m[1],10);
+  const min=parseInt(m[2],10);
+  const ap=m[3].toUpperCase();
+  if(ap==='PM'&&h!==12) h+=12;
+  if(ap==='AM'&&h===12) h=0;
+  return {h,m:min};
+}
+
+function parseTimeRange(str){
+  // "6:00 PM - 7:30 PM" -> {start:{h,m}, end:{h,m}}; "6:00 PM" -> {start:{h,m}, end:null}
+  const parts=String(str||'').split(/-|–/);
+  return { start:parseClockTime(parts[0]), end: parts[1]?parseClockTime(parts[1]):null };
+}
+
+function icsDateTime(monthAbbr,day,hm){
+  const mi=CAL_MONTH_IDX[monthAbbr];
+  if(mi===undefined||!hm) return null;
+  const d=pad2(parseInt(day,10));
+  return `${CAL_SEASON_YEAR}${pad2(mi+1)}${d}T${pad2(hm.h)}${pad2(hm.m)}00`;
+}
+
+function buildScheduleICS(){
+  const lines=['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//Wild Rhinos Team Hub//EN','CALSCALE:GREGORIAN','METHOD:PUBLISH'];
+  const dtstamp=new Date().toISOString().replace(/[-:]/g,'').split('.')[0]+'Z';
+
+  schedule.forEach(g=>{
+    const dateParts=String(g.date||'').trim().split(' ');
+    if(dateParts.length<2) return; // skip games without a real date (e.g. "TBD")
+    const [monthAbbr,day]=dateParts;
+    const start=parseClockTime(g.time)||{h:9,m:0};
+    let endH=start.h+1, endM=start.m+30;
+    if(endM>=60){ endM-=60; endH+=1; }
+    const startStr=icsDateTime(monthAbbr,day,start);
+    const endStr=icsDateTime(monthAbbr,day,{h:endH%24,m:endM});
+    if(!startStr||!endStr) return;
+    lines.push('BEGIN:VEVENT');
+    lines.push('UID:game-'+g.id+'@wildrhinos-teamhub');
+    lines.push('DTSTAMP:'+dtstamp);
+    lines.push('DTSTART:'+startStr);
+    lines.push('DTEND:'+endStr);
+    lines.push('SUMMARY:'+icsEscape((g.ha==='Home'?'vs ':'@ ')+g.opponent));
+    if(g.loc) lines.push('LOCATION:'+icsEscape(g.loc));
+    lines.push('DESCRIPTION:'+icsEscape([g.league,g.ha?g.ha+' game':''].filter(Boolean).join(' — ')));
+    lines.push('END:VEVENT');
+  });
+
+  practices.forEach(p=>{
+    if(p.canceled) return;
+    const range=parseTimeRange(p.time);
+    const start=range.start||{h:18,m:0};
+    const end=range.end||{h:19,m:30};
+    const startStr=icsDateTime(p.month,p.day,start);
+    const endStr=icsDateTime(p.month,p.day,end);
+    if(!startStr||!endStr) return;
+    lines.push('BEGIN:VEVENT');
+    lines.push('UID:practice-'+p.id+'@wildrhinos-teamhub');
+    lines.push('DTSTAMP:'+dtstamp);
+    lines.push('DTSTART:'+startStr);
+    lines.push('DTEND:'+endStr);
+    lines.push('SUMMARY:'+icsEscape('Wild Rhinos Practice'));
+    lines.push('LOCATION:'+icsEscape(CAL_PRACTICE_LOCATION));
+    lines.push('END:VEVENT');
+  });
+
+  lines.push('END:VCALENDAR');
+  return lines.join('\r\n');
+}
+
+function downloadScheduleICS(){
+  const ics=buildScheduleICS();
+  const blob=new Blob([ics],{type:'text/calendar;charset=utf-8'});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement('a');
+  a.href=url;
+  a.download='WildRhinos-Schedule.ics';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  setTimeout(()=>URL.revokeObjectURL(url),1000);
+}
+
+function exportToGoogleCalendar(){
+  downloadScheduleICS();
+  const steps=document.getElementById('cal-steps-google');
+  if(steps) steps.style.display='block';
+  setTimeout(()=>{
+    window.open('https://calendar.google.com/calendar/r/settings/export','_blank');
+  },300);
 }
 
 function addGame(){
