@@ -184,6 +184,20 @@
   .player-num-item:hover { background: var(--surface); }
   .player-num-item input[type=number] { width: 52px; background: var(--bg3); border: 1px solid var(--border2); border-radius: 6px; padding: 3px 6px; color: var(--text); font-size: 13px; text-align: center; font-family: 'Barlow Condensed', sans-serif; font-weight: 700; }
   .player-num-item .p-name { flex: 1; }
+
+  /* ── Next Up banner ──────────────────────────────────────── */
+  .nextup { background: linear-gradient(135deg, var(--orange) 0%, var(--orange-dark) 100%); color: white; padding: 14px 24px; display: flex; align-items: center; justify-content: center; gap: 14px; flex-wrap: wrap; text-align: center; font-family: 'Barlow', sans-serif; }
+  .nextup .nu-label { font-size: 10px; letter-spacing: 2px; text-transform: uppercase; font-weight: 700; opacity: 0.85; }
+  .nextup .nu-title { font-size: 15px; font-weight: 700; }
+  .nextup .nu-countdown { font-size: 12px; font-weight: 600; background: rgba(0,0,0,0.18); padding: 3px 12px; border-radius: 20px; }
+
+  /* ── RSVP ─────────────────────────────────────────────────── */
+  .rsvp-toggle-btn { font-size: 12px; color: var(--text3); cursor: pointer; background: none; border: none; padding: 0; margin-top: 8px; font-family: 'Barlow', sans-serif; }
+  .rsvp-toggle-btn:hover { color: var(--orange); }
+  .rsvp-wrap { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--border); width: 100%; }
+  .rsvp-chip { display: inline-flex; align-items: center; gap: 6px; padding: 6px 12px; border-radius: 20px; border: 1px solid var(--border2); background: var(--bg3); color: var(--text2); font-size: 12px; font-weight: 600; cursor: pointer; transition: all 0.15s; user-select: none; font-family: 'Barlow', sans-serif; }
+  .rsvp-chip:hover { border-color: var(--orange); }
+  .rsvp-chip.is-in { background: rgba(74,222,128,0.15); border-color: rgba(74,222,128,0.4); color: #4ade80; }
   .section-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; flex-wrap: wrap; gap: 12px; }
   .section-top-left h2 { font-family: 'Barlow Condensed', sans-serif; font-size: 26px; font-weight: 700; }
   .section-top-left h2 span { color: var(--orange); }
@@ -250,6 +264,12 @@
     </div>
   </div>
 </nav>
+
+<div class="nextup" id="nextup-banner" style="display:none">
+  <span class="nu-label" id="nu-type">Next Up</span>
+  <span class="nu-title" id="nu-title"></span>
+  <span class="nu-countdown" id="nu-countdown"></span>
+</div>
 
 <div class="setup-banner" id="setup-banner" style="display:none">
   <strong>⚙️ Supabase setup needed.</strong> Fill in your credentials in the <code>SUPABASE_CONFIG</code> block at the top of the &lt;script&gt;. Steps:
@@ -331,6 +351,11 @@
       <li>In that tab, click <strong>"Select file from your computer"</strong> and choose the file you just downloaded.</li>
       <li>Choose which calendar to add the events to, then click <strong>Import</strong>.</li>
     </ol>
+    <div id="cal-steps-mobile" style="display:none;font-size:12px;color:var(--text2);line-height:1.7;margin-top:10px;padding:10px 12px;background:var(--bg3);border-radius:8px;">
+      <strong style="color:var(--orange-light)">Heads up:</strong> Google Calendar's file import only works on a desktop computer — that's a Google limitation on phones, not something this app controls. Your file still downloaded to your phone. Two options:
+      <br>• <strong style="color:var(--text)">Easiest on iPhone:</strong> use the <strong>Apple Calendar / Outlook</strong> button above instead — it works directly on your phone.
+      <br>• <strong style="color:var(--text)">For Google specifically:</strong> open this page on a computer later and click "Add to Google Calendar" there.
+    </div>
   </div>
 
   <div id="scheduleList"></div>
@@ -756,6 +781,57 @@ function parseGameDate(dateStr){
     return isNaN(d) ? null : d;
   } catch(e){ return null; }
 }
+
+// ── Next Up banner ──────────────────────────────────────────
+function computeNextUp(){
+  const now=new Date();
+  const candidates=[];
+
+  schedule.forEach(g=>{
+    const d=parseGameDate(g.date);
+    if(!d) return;
+    const t=parseClockTime(g.time);
+    if(t) d.setHours(t.h,t.m,0,0); else d.setHours(23,59,0,0);
+    candidates.push({type:'Game',title:(g.ha==='Home'?'vs ':'@ ')+g.opponent,date:d,hasTime:!!t});
+  });
+
+  practices.forEach(p=>{
+    if(p.canceled) return;
+    const d=parseGameDate(p.month+' '+p.day);
+    if(!d) return;
+    const t=parseTimeRange(p.time).start;
+    if(t) d.setHours(t.h,t.m,0,0); else d.setHours(18,0,0,0);
+    candidates.push({type:'Practice',title:'Team Practice',date:d,hasTime:true});
+  });
+
+  const upcoming=candidates.filter(c=>c.date>=now).sort((a,b)=>a.date-b.date);
+  return upcoming[0]||null;
+}
+
+function countdownText(target){
+  const diffMs=target-new Date();
+  if(diffMs<=0) return 'Happening now';
+  const diffMin=Math.round(diffMs/60000);
+  const days=Math.floor(diffMin/1440);
+  const hours=Math.floor((diffMin%1440)/60);
+  const mins=diffMin%60;
+  if(days>0) return days+'d '+hours+'h';
+  if(hours>0) return hours+'h '+mins+'m';
+  return mins+' min';
+}
+
+function renderNextUp(){
+  const banner=document.getElementById('nextup-banner');
+  if(!banner) return;
+  const next=computeNextUp();
+  if(!next){ banner.style.display='none'; return; }
+  banner.style.display='flex';
+  document.getElementById('nu-type').textContent='Next '+next.type;
+  const dateLabel=next.date.toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric'})+(next.hasTime?' · '+next.date.toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit'}):'');
+  document.getElementById('nu-title').textContent=next.title+' — '+dateLabel;
+  document.getElementById('nu-countdown').textContent=countdownText(next.date);
+}
+
 function renderSchedule(){
   const today = new Date(); today.setHours(0,0,0,0);
   const upcoming = schedule.filter(g=>{
@@ -827,7 +903,14 @@ function renderPractice(){
     list.innerHTML='<div class="empty-state"><div class="icon">🏃</div><p>No upcoming practices — season complete!</p></div>';
     return;
   }
-  list.innerHTML=upcoming.map(p=>`
+  list.innerHTML=upcoming.map(p=>{
+    const attending=Array.isArray(p.attending)?p.attending:[];
+    const isOpen=expandedRSVP.has(p.id);
+    const chips=players.map(pl=>{
+      const isIn=attending.includes(pl.id);
+      return `<button type="button" class="rsvp-chip${isIn?' is-in':''}" onclick="toggleRSVP(${p.id},${pl.id})">${isIn?'✓ ':''}${pl.name}</button>`;
+    }).join('');
+    return `
     <div class="schedule-card" style="${p.canceled?'opacity:0.5':''}">
       <div class="sched-date-block"><div class="sched-month">${p.month}</div><div class="sched-day">${p.day}</div></div>
       <div class="sched-info">
@@ -837,10 +920,15 @@ function renderPractice(){
         <div class="sched-meta">${p.weekday} · ${p.time||'6:00 PM'}</div>
       </div>
       <button class="btn btn-ghost" style="font-size:11px;padding:5px 12px" onclick="toggleCancel(${p.id})">${p.canceled?'Restore':'Cancel'}</button>
-    </div>`).join('');
+      <div style="flex-basis:100%">
+        <button type="button" class="rsvp-toggle-btn" onclick="toggleRSVPPanel(${p.id})">RSVP (${attending.length}/${players.length}) ${isOpen?'▲':'▼'}</button>
+        ${isOpen?`<div class="rsvp-wrap">${chips}</div>`:''}
+      </div>
+    </div>`;
+  }).join('');
 }
 
-function renderAll(){ renderSquad();renderMatches();renderSchedule();renderLeaders();renderVideos();renderPractice(); }
+function renderAll(){ renderSquad();renderMatches();renderSchedule();renderLeaders();renderVideos();renderPractice();renderNextUp(); }
 
 // ── Mutations ────────────────────────────────────────────────
 function addPlayer(){
@@ -988,13 +1076,30 @@ function downloadScheduleICS(){
   setTimeout(()=>URL.revokeObjectURL(url),1000);
 }
 
+function isMobileDevice(){
+  return /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+}
+
 function exportToGoogleCalendar(){
-  downloadScheduleICS();
   const steps=document.getElementById('cal-steps-google');
+  const mobileNote=document.getElementById('cal-steps-mobile');
+
+  if(isMobileDevice()){
+    // Google Calendar's import tool only exists on desktop — it doesn't work on
+    // any phone browser or the Google Calendar app itself, so don't send people
+    // to a page that can't do anything for them.
+    downloadScheduleICS();
+    if(steps) steps.style.display='none';
+    if(mobileNote) mobileNote.style.display='block';
+    return;
+  }
+
+  // Open the tab FIRST and synchronously — any delay (even a setTimeout) makes
+  // Safari/Chrome treat it as a blocked popup instead of a real user action.
+  window.open('https://calendar.google.com/calendar/r/settings/export','_blank');
+  downloadScheduleICS();
+  if(mobileNote) mobileNote.style.display='none';
   if(steps) steps.style.display='block';
-  setTimeout(()=>{
-    window.open('https://calendar.google.com/calendar/r/settings/export','_blank');
-  },300);
 }
 
 function addGame(){
@@ -1064,6 +1169,24 @@ function toggleCancel(id){
     const p=practices.find(x=>x.id===id);
     if(p){ p.canceled=!p.canceled; saveAll(); }
   });
+}
+
+// ── RSVP (open to anyone, no admin password) ──────────────────
+let expandedRSVP=new Set();
+
+function toggleRSVPPanel(pracId){
+  if(expandedRSVP.has(pracId)) expandedRSVP.delete(pracId); else expandedRSVP.add(pracId);
+  renderPractice();
+}
+
+function toggleRSVP(pracId,playerId){
+  const p=practices.find(x=>x.id===pracId);
+  if(!p) return;
+  if(!Array.isArray(p.attending)) p.attending=[];
+  const idx=p.attending.indexOf(playerId);
+  if(idx>=0) p.attending.splice(idx,1); else p.attending.push(playerId);
+  renderPractice();
+  saveAll();
 }
 
 // ── localStorage fallback ────────────────────────────────────
@@ -1177,6 +1300,7 @@ function undoLastMatch(){
 })();
 startListening();
 setTimeout(hideLoader, 8000); // safety fallback in case of an unexpected error
+setInterval(renderNextUp, 60000); // keep the Next Up countdown ticking
 </script>
 </body>
 </html>
