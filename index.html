@@ -322,6 +322,7 @@
 <div class="section" id="sec-practice">
   <div class="section-top">
     <div class="section-top-left"><h2>Practice <span>Schedule</span></h2><p>Tuesdays &amp; Fridays through end of season</p></div>
+    <button class="btn btn-primary" onclick="openModal('add-practices')">+ Add Practices</button>
   </div>
   <div id="practiceList"></div>
 </div>
@@ -407,6 +408,21 @@
     <div class="modal-actions">
       <button class="btn btn-ghost" onclick="closeModal('modal-add-video')">Cancel</button>
       <button class="btn btn-primary" onclick="addVideo()">Add Video</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-bg" id="modal-add-practices">
+  <div class="modal">
+    <h2>Add Practices</h2>
+    <p style="font-size:13px;color:var(--text2);margin-bottom:16px;line-height:1.6;">Fills in every Tuesday and Friday between these two dates, 6:00–7:30 PM. Existing practices already on the schedule won't be duplicated.</p>
+    <div class="field-row">
+      <div class="field"><label>Start Date</label><input id="ap-start" type="date" /></div>
+      <div class="field"><label>End Date</label><input id="ap-end" type="date" /></div>
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-ghost" onclick="closeModal('modal-add-practices')">Cancel</button>
+      <button class="btn btn-primary" onclick="addPractices()">Generate Practices</button>
     </div>
   </div>
 </div>
@@ -860,6 +876,41 @@ function addVideo(){
   closeModal('modal-add-video');
   ['fv-title','fv-url','fv-date'].forEach(id=>document.getElementById(id).value='');
   saveAll();
+}
+
+function addPractices(){
+  const startVal=document.getElementById('ap-start').value;
+  const endVal=document.getElementById('ap-end').value;
+  if(!startVal||!endVal){ alert('Pick both a start and end date.'); return; }
+  const start=new Date(startVal+'T00:00:00');
+  const end=new Date(endVal+'T00:00:00');
+  if(end<start){ alert('End date must be on or after the start date.'); return; }
+
+  const existingKeys=new Set(practices.map(p=>p.month+' '+p.day));
+  let nextPracId=practices.length?Math.max(...practices.map(p=>p.id))+1:1;
+  let added=0;
+  const cursor=new Date(start);
+  while(cursor<=end){
+    const dow=cursor.getDay(); // 2 = Tuesday, 5 = Friday
+    if(dow===2||dow===5){
+      const month=cursor.toLocaleString('en-US',{month:'short'});
+      const day=String(cursor.getDate());
+      const key=month+' '+day;
+      if(!existingKeys.has(key)){
+        practices.push({id:nextPracId++,month,day,weekday:dow===2?'Tuesday':'Friday',time:'6:00 PM - 7:30 PM',canceled:false});
+        existingKeys.add(key);
+        added++;
+      }
+    }
+    cursor.setDate(cursor.getDate()+1);
+  }
+
+  closeModal('modal-add-practices');
+  document.getElementById('ap-start').value='';
+  document.getElementById('ap-end').value='';
+  renderPractice();
+  saveAll();
+  if(!added) alert('No new practices added — those Tuesdays/Fridays are already on the schedule.');
 }
 
 function toggleCancel(id){
