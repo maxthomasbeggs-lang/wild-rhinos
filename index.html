@@ -5,11 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Wild Rhinos — Team Hub</title>
 <link rel="icon" type="image/png" href="favicon.png" />
-<link rel="apple-touch-icon" href="apple-touch-icon.png" />
-<meta name="apple-mobile-web-app-capable" content="yes" />
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-<meta name="apple-mobile-web-app-title" content="Wild Rhinos" />
-<meta name="theme-color" content="#0d0d0d" />
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet" />
 <style>
   :root {
@@ -28,68 +23,19 @@
     --text: #f2f2f0;
     --text2: #a0a09a;
     --text3: #5a5a55;
-    --hero-grad1: #2a1200;
-    --hero-grad2: #1a0d00;
-    --nav-bg: rgba(13,13,13,0.94);
     --radius: 10px;
     --radius-lg: 16px;
-    --glass-bg: rgba(40,40,42,0.45);
-    --glass-bg-strong: rgba(50,50,53,0.55);
-    --glass-border: rgba(255,255,255,0.22);
-    --glass-sheen: linear-gradient(115deg, rgba(255,255,255,0.22) 0%, rgba(255,255,255,0.05) 30%, rgba(255,255,255,0) 55%);
-    --glass-shadow: 0 8px 32px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.16);
-  }
-
-  /* ── Light mode ──────────────────────────────────────────── */
-  @media (prefers-color-scheme: light) {
-    :root {
-      --bg: #f7f5f2;
-      --bg2: #f0ece6;
-      --bg3: #e9e3db;
-      --surface: #ffffff;
-      --surface2: #f4f1ec;
-      --border: rgba(20,15,10,0.08);
-      --border2: rgba(20,15,10,0.14);
-      --text: #201c17;
-      --text2: #5c564d;
-      --text3: #8c857a;
-      --hero-grad1: #ffe3c2;
-      --hero-grad2: #ffd3a0;
-      --nav-bg: rgba(255,255,255,0.9);
-      --glass-bg: rgba(255,255,255,0.45);
-      --glass-bg-strong: rgba(255,255,255,0.6);
-      --glass-border: rgba(255,255,255,0.6);
-      --glass-sheen: linear-gradient(115deg, rgba(255,255,255,0.65) 0%, rgba(255,255,255,0.15) 30%, rgba(255,255,255,0) 55%);
-      --glass-shadow: 0 8px 32px rgba(30,20,10,0.14), inset 0 1px 0 rgba(255,255,255,0.7);
-    }
   }
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   html { scroll-behavior: smooth; }
   body { font-family: 'Barlow', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
 
-  .app-shell { display: flex; min-height: 100vh; align-items: stretch; }
-  .app-main { flex: 1; min-width: 0; }
-  .sidebar { width: 220px; flex-shrink: 0; position: sticky; top: 0; align-self: flex-start; height: 100vh; display: flex; flex-direction: column; padding: 22px 14px; gap: 8px; background: var(--glass-bg-strong); backdrop-filter: blur(24px) saturate(180%); -webkit-backdrop-filter: blur(24px) saturate(180%); border-right: 1px solid var(--glass-border); box-shadow: var(--glass-shadow); z-index: 150; }
-  .sidebar-brand { display: flex; align-items: center; justify-content: center; padding: 6px 0 22px; }
-  .sidebar-nav { display: flex; flex-direction: column; gap: 6px; flex: 1; }
-  .nav-link { display: flex; align-items: center; gap: 12px; padding: 11px 14px; border-radius: 12px; background: transparent; border: none; color: var(--text2); font-family: 'Barlow', sans-serif; font-size: 14px; font-weight: 600; cursor: pointer; text-align: left; transition: all 0.15s; width: 100%; }
-  .nav-link .nav-icon { font-size: 17px; line-height: 1; display: inline-flex; align-items: center; justify-content: center; width: 36px; height: 26px; border-radius: 14px; transition: background 0.2s ease; flex-shrink: 0; }
-  .nav-link:hover { color: var(--text); background: var(--glass-bg); }
-  .nav-link.active { color: var(--orange); background: transparent; box-shadow: none; }
-  .nav-link.active .nav-icon { background: rgba(232,98,10,0.18); }
-  .sidebar-footer { display: flex; flex-direction: column; gap: 10px; padding-top: 12px; border-top: 1px solid var(--border); }
-  .utility-bar { display: none; align-items: center; justify-content: center; gap: 14px; padding: 14px 16px 0; flex-wrap: wrap; }
-
-  @media (max-width: 900px) {
-    .app-shell { flex-direction: column; }
-    .sidebar { position: fixed; bottom: 0; left: 0; right: 0; top: auto; width: 100%; height: auto; flex-direction: row; align-items: center; padding: 6px 4px calc(6px + env(safe-area-inset-bottom)); border-right: none; border-top: 1px solid var(--glass-border); z-index: 300; }
-    .sidebar-brand, .sidebar-footer { display: none; }
-    .sidebar-nav { flex-direction: row; justify-content: space-around; width: 100%; gap: 2px; }
-    .nav-link { flex-direction: column; gap: 3px; padding: 6px 2px; font-size: 9.5px; border-radius: 10px; flex: 1; align-items: center; letter-spacing: 0; }
-    .nav-link .nav-icon { font-size: 19px; }
-    .app-main { padding-bottom: 74px; }
-    .utility-bar { display: flex; }
-  }
+  nav { position: sticky; top: 0; z-index: 100; background: rgba(13,13,13,0.94); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 0 24px; display: flex; align-items: center; justify-content: space-between; height: 58px; }
+  .nav-brand { font-family: 'Barlow Condensed', sans-serif; font-weight: 800; font-size: 22px; letter-spacing: 1px; color: var(--orange); display: flex; align-items: center; gap: 8px; }
+  .nav-links { display: flex; gap: 4px; }
+  .nav-link { padding: 6px 14px; font-size: 13px; font-weight: 500; color: var(--text2); border-radius: 6px; cursor: pointer; transition: all 0.15s; border: none; background: none; font-family: 'Barlow', sans-serif; }
+  .nav-link:hover { color: var(--text); background: var(--surface); }
+  .nav-link.active { color: var(--orange); background: rgba(232,98,10,0.12); }
 
   #reset-data-btn:hover { background: rgba(248,113,113,0.2) !important; border-color: rgba(248,113,113,0.5) !important; }
   .sync-dot { width: 7px; height: 7px; border-radius: 50%; background: #4ade80; display: inline-block; margin-left: 6px; vertical-align: middle; }
@@ -104,12 +50,11 @@
   .setup-banner ol { padding-left: 18px; margin-top: 8px; }
   .setup-banner li { margin-bottom: 4px; }
 
-  .hero { background: linear-gradient(135deg, var(--hero-grad1) 0%, var(--hero-grad2) 50%, var(--bg) 100%); padding: 64px 24px 48px; text-align: center; position: relative; overflow: hidden; }
+  .hero { background: linear-gradient(135deg, #2a1200 0%, #1a0d00 50%, var(--bg) 100%); padding: 64px 24px 48px; text-align: center; position: relative; overflow: hidden; }
   .hero::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at 50% 0%, rgba(232,98,10,0.18) 0%, transparent 70%); }
   .hero-eyebrow { font-size: 12px; font-weight: 600; letter-spacing: 3px; text-transform: uppercase; color: var(--orange-light); margin-bottom: 12px; position: relative; }
   .hero-title { font-family: 'Barlow Condensed', sans-serif; font-size: clamp(52px, 10vw, 96px); font-weight: 800; letter-spacing: 2px; line-height: 0.9; color: var(--text); position: relative; }
-  .hero-title span { background: linear-gradient(135deg, var(--orange-light) 0%, var(--orange) 45%, #fff2 60%, var(--orange) 75%, var(--orange-dark) 100%); background-size: 220% 220%; -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; animation: sheen-shift 6s ease-in-out infinite; }
-  @keyframes sheen-shift { 0%,100% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } }
+  .hero-title span { color: var(--orange); }
   .hero-sub { font-size: 14px; color: var(--text2); margin-top: 14px; position: relative; }
   .coaching-strip { display: flex; justify-content: center; gap: 24px; margin-top: 12px; position: relative; flex-wrap: wrap; }
   .coach-item { font-size: 13px; color: var(--text3); }
@@ -128,7 +73,7 @@
   .section { padding: 40px 24px; max-width: 960px; margin: 0 auto; display: none; }
   .section.active { display: block; }
   .stats-row { display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: 10px; margin-bottom: 28px; }
-  .stat-box { position: relative; background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: var(--radius); padding: 14px 16px; backdrop-filter: blur(20px) saturate(180%); -webkit-backdrop-filter: blur(20px) saturate(180%); box-shadow: var(--glass-shadow); overflow: hidden; }
+  .stat-box { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 14px 16px; }
   .stat-box .lbl { font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--text3); font-weight: 600; margin-bottom: 6px; }
   .stat-box .val { font-family: 'Barlow Condensed', sans-serif; font-size: 32px; font-weight: 700; line-height: 1; color: var(--orange); }
 
@@ -138,16 +83,16 @@
   th { padding: 10px 14px; text-align: left; font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--text3); font-weight: 600; white-space: nowrap; }
   td { padding: 11px 14px; border-top: 1px solid var(--border); color: var(--text); vertical-align: middle; }
   tbody tr:hover td { background: var(--surface); }
-  .avatar { width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; flex-shrink: 0; font-family: 'Barlow Condensed', sans-serif; position: relative; border: 1px solid rgba(255,255,255,0.35); box-shadow: 0 0 0 1px rgba(255,255,255,0.06), 0 2px 10px rgba(0,0,0,0.35), inset 0 1px 2px rgba(255,255,255,0.4); }
+  .avatar { width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; flex-shrink: 0; font-family: 'Barlow Condensed', sans-serif; }
   .player-cell { display: flex; align-items: center; gap: 10px; }
   .player-name { font-weight: 600; font-size: 14px; }
   .player-pos { font-size: 11px; color: var(--text3); }
-  .num-chip { width: 26px; height: 26px; border-radius: 5px; background: var(--glass-bg); border: 1px solid var(--glass-border); display: flex; align-items: center; justify-content: center; font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 13px; color: var(--text2); backdrop-filter: blur(10px) saturate(180%); -webkit-backdrop-filter: blur(10px) saturate(180%); box-shadow: inset 0 1px 0 rgba(255,255,255,0.18); }
+  .num-chip { width: 26px; height: 26px; border-radius: 5px; background: var(--bg3); border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 13px; color: var(--text2); }
   .badge { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: 600; }
   .badge-yc { background: rgba(240,180,41,0.15); color: #f0b429; }
   .badge-rc { background: rgba(248,113,113,0.15); color: #f87171; }
 
-  .match-card { position: relative; background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: var(--radius-lg); padding: 16px 20px; margin-bottom: 10px; display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; transition: border-color 0.15s; backdrop-filter: blur(20px) saturate(180%); -webkit-backdrop-filter: blur(20px) saturate(180%); box-shadow: var(--glass-shadow); overflow: hidden; }
+  .match-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 16px 20px; margin-bottom: 10px; display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; transition: border-color 0.15s; }
   .match-card:hover { border-color: var(--border2); }
   .match-vs { font-size: 12px; color: var(--text3); margin-bottom: 3px; text-transform: uppercase; letter-spacing: 1px; }
   .match-opp { font-size: 16px; font-weight: 600; }
@@ -161,8 +106,8 @@
   .match-scorers { margin-top: 5px; font-size: 12px; color: var(--text3); }
   .match-scorers span { color: var(--text2); }
 
-  .schedule-card { position: relative; background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: var(--radius-lg); padding: 16px 20px; margin-bottom: 10px; display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; backdrop-filter: blur(20px) saturate(180%); -webkit-backdrop-filter: blur(20px) saturate(180%); box-shadow: var(--glass-shadow); overflow: hidden; }
-  .sched-date-block { background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: var(--radius); padding: 8px 14px; text-align: center; min-width: 56px; flex-shrink: 0; backdrop-filter: blur(10px) saturate(180%); -webkit-backdrop-filter: blur(10px) saturate(180%); box-shadow: inset 0 1px 0 rgba(255,255,255,0.18); }
+  .schedule-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 16px 20px; margin-bottom: 10px; display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+  .sched-date-block { background: var(--bg3); border: 1px solid var(--border); border-radius: var(--radius); padding: 8px 14px; text-align: center; min-width: 56px; flex-shrink: 0; }
   .sched-month { font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--text3); font-weight: 600; }
   .sched-day { font-family: 'Barlow Condensed', sans-serif; font-size: 28px; font-weight: 800; line-height: 1; color: var(--orange); }
   .sched-info { flex: 1; }
@@ -183,31 +128,22 @@
   .leader-bar { height: 3px; background: var(--orange); border-radius: 2px; }
 
   .video-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 16px; }
-  .video-card { position: relative; background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: var(--radius-lg); overflow: hidden; backdrop-filter: blur(20px) saturate(180%); -webkit-backdrop-filter: blur(20px) saturate(180%); box-shadow: var(--glass-shadow); }
-
-  .cal-export-card { position: relative; background: var(--glass-bg); border: 1px solid var(--glass-border); backdrop-filter: blur(20px) saturate(180%); -webkit-backdrop-filter: blur(20px) saturate(180%); box-shadow: var(--glass-shadow); overflow: hidden; }
-
-  /* Liquid Glass specular sheen — shared across all glass surfaces */
-  .sidebar::before, .stat-box::before, .match-card::before, .schedule-card::before, .video-card::before,
-  .modal::before, .btn-primary::before, .btn-ghost::before, .cal-export-card::before {
-    content: ''; position: absolute; inset: 0; background: var(--glass-sheen); pointer-events: none; z-index: 0; border-radius: inherit;
-  }
-  .sidebar > * , .stat-box > *, .match-card > *, .schedule-card > *, .video-card > *, .modal > *, .cal-export-card > * { position: relative; z-index: 1; }
-  .video-embed { position: relative; padding-top: 56.25%; background: var(--bg3); box-shadow: inset 0 0 40px rgba(232,98,10,0.08); }
+  .video-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); overflow: hidden; }
+  .video-embed { position: relative; padding-top: 56.25%; background: var(--bg3); }
   .video-embed iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: none; }
   .video-info { padding: 12px 14px; }
   .video-title { font-weight: 600; font-size: 14px; margin-bottom: 3px; }
   .video-date { font-size: 12px; color: var(--text3); }
 
-  .btn { position: relative; padding: 9px 20px; font-size: 13px; font-weight: 600; border-radius: 20px; border: none; cursor: pointer; transition: all 0.15s; font-family: 'Barlow', sans-serif; letter-spacing: 0.3px; overflow: hidden; }
-  .btn-primary { background: linear-gradient(135deg, rgba(232,98,10,0.85), rgba(160,66,10,0.85)); color: white; border: 1px solid rgba(255,255,255,0.3); backdrop-filter: blur(16px) saturate(180%); -webkit-backdrop-filter: blur(16px) saturate(180%); box-shadow: 0 4px 16px rgba(232,98,10,0.35), inset 0 1px 0 rgba(255,255,255,0.35); }
-  .btn-primary:hover { background: linear-gradient(135deg, rgba(244,124,42,0.9), rgba(232,98,10,0.9)); box-shadow: 0 6px 20px rgba(232,98,10,0.45), inset 0 1px 0 rgba(255,255,255,0.45); }
-  .btn-ghost { background: var(--glass-bg); color: var(--text2); border: 1px solid var(--glass-border); backdrop-filter: blur(16px) saturate(180%); -webkit-backdrop-filter: blur(16px) saturate(180%); box-shadow: inset 0 1px 0 rgba(255,255,255,0.14); }
-  .btn-ghost:hover { background: var(--glass-bg-strong); color: var(--text); }
+  .btn { padding: 9px 20px; font-size: 13px; font-weight: 600; border-radius: var(--radius); border: none; cursor: pointer; transition: all 0.15s; font-family: 'Barlow', sans-serif; letter-spacing: 0.3px; }
+  .btn-primary { background: var(--orange); color: white; }
+  .btn-primary:hover { background: var(--orange-light); }
+  .btn-ghost { background: transparent; color: var(--text2); border: 1px solid var(--border2); }
+  .btn-ghost:hover { background: var(--surface); color: var(--text); }
 
-  .modal-bg { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.55); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); z-index: 200; align-items: center; justify-content: center; padding: 16px; }
+  .modal-bg { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.75); z-index: 200; align-items: center; justify-content: center; padding: 16px; }
   .modal-bg.open { display: flex; }
-  .modal { position: relative; background: var(--glass-bg-strong); border: 1px solid var(--glass-border); border-radius: var(--radius-lg); padding: 24px; width: 100%; max-width: 480px; max-height: 95vh; overflow-y: auto; backdrop-filter: blur(28px) saturate(180%); -webkit-backdrop-filter: blur(28px) saturate(180%); box-shadow: var(--glass-shadow); }
+  .modal { background: var(--bg2); border: 1px solid var(--border2); border-radius: var(--radius-lg); padding: 24px; width: 100%; max-width: 480px; max-height: 95vh; overflow-y: auto; }
   .modal h2 { font-family: 'Barlow Condensed', sans-serif; font-size: 22px; font-weight: 700; margin-bottom: 20px; }
   .field { margin-bottom: 14px; }
   .field label { display: block; font-size: 10px; letter-spacing: 1px; text-transform: uppercase; color: var(--text3); font-weight: 600; margin-bottom: 6px; }
@@ -226,20 +162,6 @@
   .player-num-item:hover { background: var(--surface); }
   .player-num-item input[type=number] { width: 52px; background: var(--bg3); border: 1px solid var(--border2); border-radius: 6px; padding: 3px 6px; color: var(--text); font-size: 13px; text-align: center; font-family: 'Barlow Condensed', sans-serif; font-weight: 700; }
   .player-num-item .p-name { flex: 1; }
-
-  /* ── Next Up banner ──────────────────────────────────────── */
-  .nextup { background: linear-gradient(135deg, var(--orange) 0%, var(--orange-dark) 100%); color: white; padding: 14px 24px; display: flex; align-items: center; justify-content: center; gap: 14px; flex-wrap: wrap; text-align: center; font-family: 'Barlow', sans-serif; }
-  .nextup .nu-label { font-size: 10px; letter-spacing: 2px; text-transform: uppercase; font-weight: 700; opacity: 0.85; }
-  .nextup .nu-title { font-size: 15px; font-weight: 700; }
-  .nextup .nu-countdown { font-size: 12px; font-weight: 600; background: rgba(0,0,0,0.18); padding: 3px 12px; border-radius: 20px; }
-
-  /* ── RSVP ─────────────────────────────────────────────────── */
-  .rsvp-toggle-btn { font-size: 12px; color: var(--text3); cursor: pointer; background: none; border: none; padding: 0; margin-top: 8px; font-family: 'Barlow', sans-serif; }
-  .rsvp-toggle-btn:hover { color: var(--orange); }
-  .rsvp-wrap { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--border); width: 100%; }
-  .rsvp-chip { display: inline-flex; align-items: center; gap: 6px; padding: 6px 12px; border-radius: 20px; border: 1px solid var(--glass-border); background: var(--glass-bg); color: var(--text2); font-size: 12px; font-weight: 600; cursor: pointer; transition: all 0.15s; user-select: none; font-family: 'Barlow', sans-serif; backdrop-filter: blur(14px) saturate(180%); -webkit-backdrop-filter: blur(14px) saturate(180%); box-shadow: inset 0 1px 0 rgba(255,255,255,0.14); }
-  .rsvp-chip:hover { border-color: var(--orange); }
-  .rsvp-chip.is-in { background: rgba(74,222,128,0.15); border-color: rgba(74,222,128,0.4); color: #4ade80; }
   .section-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; flex-wrap: wrap; gap: 12px; }
   .section-top-left h2 { font-family: 'Barlow Condensed', sans-serif; font-size: 26px; font-weight: 700; }
   .section-top-left h2 span { color: var(--orange); }
@@ -251,6 +173,7 @@
     .stats-row { grid-template-columns: repeat(2, 1fr); }
     .leader-grid { grid-template-columns: 1fr; }
     .record-item { padding: 10px 16px; }
+    .nav-link { padding: 6px 8px; font-size: 11px; }
     .hero { padding: 36px 16px 28px; }
     .section { padding: 24px 16px; }
     .field-row { grid-template-columns: 1fr; }
@@ -260,7 +183,7 @@
   #app-loader {
     position: fixed; inset: 0; z-index: 9999;
     display: flex; flex-direction: column; align-items: center; justify-content: center;
-    background: var(--bg);
+    background: #0d0d0d;
     transition: opacity 0.4s ease, visibility 0.4s ease;
   }
   #app-loader.loader-hidden { opacity: 0; visibility: hidden; pointer-events: none; }
@@ -272,6 +195,7 @@
   @keyframes loader-slide { 0% { transform: translateX(-100%); } 100% { transform: translateX(350%); } }
 
   @media (prefers-color-scheme: light) {
+    #app-loader { background: #f7f5f2; }
     #app-loader .loader-text { color: #6b6b64; }
   }
 </style>
@@ -284,48 +208,27 @@
   <div class="loader-bar"></div>
 </div>
 
-<div class="app-shell">
-<aside class="sidebar">
-  <div class="sidebar-brand"><img id="nav-logo" src="favicon.png" alt="Wild Rhinos" style="height:38px;width:auto;object-fit:contain;filter:drop-shadow(0 0 12px rgba(232,98,10,0.5));" /></div>
-  <nav class="sidebar-nav">
-    <button class="nav-link active" onclick="showSection('squad')"><span class="nav-icon"><svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20"><circle cx="8" cy="8" r="3.2"/><path d="M8 12.5c-3.3 0-6 1.6-6 4.3V19h12v-2.2c0-2.7-2.7-4.3-6-4.3z"/><circle cx="17" cy="8.5" r="2.6" opacity="0.75"/><path d="M17 12.3c-.6 0-1.2.05-1.75.15 1.1.85 1.75 2.05 1.75 3.55V19h5v-2c0-2.4-2.4-3.7-5-4.7z" opacity="0.75"/></svg></span><span class="nav-label">Squad</span></button>
-    <button class="nav-link" onclick="showSection('matches')"><span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" width="20" height="20"><circle cx="12" cy="12" r="9.2" stroke="currentColor" stroke-width="1.6"/><path d="M12 7.2l3 2.2-1.1 3.6H10.1L9 9.4z" fill="currentColor"/><path d="M12 7.2V4.6M15 9.4l2.4-1.6M13.9 13l2 2.2M10.1 13l-2 2.2M9 9.4L6.6 7.8" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg></span><span class="nav-label">Matches</span></button>
-    <button class="nav-link" onclick="showSection('schedule')"><span class="nav-icon"><svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20"><rect x="3.5" y="5" width="17" height="15" rx="2.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M3.5 9.5h17" stroke="currentColor" stroke-width="1.6"/><path d="M7.5 3.5v3M16.5 3.5v3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><circle cx="8" cy="13.2" r="1.1"/><circle cx="12" cy="13.2" r="1.1"/><circle cx="16" cy="13.2" r="1.1"/><circle cx="8" cy="16.8" r="1.1"/><circle cx="12" cy="16.8" r="1.1"/></svg></span><span class="nav-label">Schedule</span></button>
-    <button class="nav-link" onclick="showSection('leaders')"><span class="nav-icon"><svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20"><rect x="4" y="12" width="4" height="8" rx="1"/><rect x="10" y="7" width="4" height="13" rx="1"/><rect x="16" y="3" width="4" height="17" rx="1"/></svg></span><span class="nav-label">Stats</span></button>
-    <button class="nav-link" onclick="showSection('videos')"><span class="nav-icon"><svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20"><rect x="3" y="6.5" width="12" height="11" rx="2.2"/><path d="M15 10.2l5.2-3v9.6l-5.2-3z"/></svg></span><span class="nav-label">Videos</span></button>
-    <button class="nav-link" onclick="showSection('practice')"><span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" width="20" height="20"><rect x="9" y="2" width="6" height="2.4" rx="1.2" fill="currentColor" stroke="none"/><circle cx="12" cy="14" r="8" stroke="currentColor" stroke-width="1.8"/><path d="M12 9v5.2l3.4 2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M17.5 6.2l1.6-1.6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></span><span class="nav-label">Practice</span></button>
-  </nav>
-  <div class="sidebar-footer">
+<nav>
+  <div class="nav-brand"><img id="nav-logo" src="" alt="Wild Rhinos" style="height:40px;width:auto;object-fit:contain;" /></div>
+  <div class="nav-links">
+    <button class="nav-link active" onclick="showSection('squad')">Squad</button>
+    <button class="nav-link" onclick="showSection('matches')">Matches</button>
+    <button class="nav-link" onclick="showSection('schedule')">Schedule</button>
+    <button class="nav-link" onclick="showSection('leaders')">Player Stats</button>
+    <button class="nav-link" onclick="showSection('videos')">Videos</button>
+    <button class="nav-link" onclick="showSection('practice')">Practice</button>
+  </div>
+  <div style="display:flex;align-items:center;gap:14px;">
     <button id="reset-data-btn" onclick="requireAuth(resetSeasonData)" title="Clear player stats, videos, practices, schedule, and matches (admin only)"
-      style="padding:6px 12px;font-size:11px;font-weight:600;color:#f87171;background:rgba(248,113,113,0.1);border:1px solid rgba(248,113,113,0.3);border-radius:6px;cursor:pointer;font-family:'Barlow',sans-serif;transition:all 0.15s;width:100%;">
+      style="padding:6px 12px;font-size:11px;font-weight:600;color:#f87171;background:rgba(248,113,113,0.1);border:1px solid rgba(248,113,113,0.3);border-radius:6px;cursor:pointer;font-family:'Barlow',sans-serif;transition:all 0.15s;">
       Reset Data
     </button>
-    <div style="display:flex;align-items:center;justify-content:center;gap:6px;font-size:11px;color:var(--text3)" title="Supabase sync status">
+    <div style="display:flex;align-items:center;gap:6px;font-size:11px;color:var(--text3)" title="Supabase sync status">
       <span id="sync-label">Live</span>
       <span class="sync-dot syncing" id="sync-dot"></span>
     </div>
   </div>
-</aside>
-
-<div class="app-main">
-
-<div class="utility-bar">
-  <button onclick="requireAuth(resetSeasonData)" title="Clear player stats, videos, practices, schedule, and matches (admin only)"
-    style="padding:6px 12px;font-size:11px;font-weight:600;color:#f87171;background:rgba(248,113,113,0.1);border:1px solid rgba(248,113,113,0.3);border-radius:6px;cursor:pointer;font-family:'Barlow',sans-serif;">
-    Reset Data
-  </button>
-  <div style="display:flex;align-items:center;gap:6px;font-size:11px;color:var(--text3)" title="Supabase sync status">
-    <span id="sync-label-mobile">Live</span>
-    <span class="sync-dot syncing" id="sync-dot-mobile"></span>
-  </div>
-</div>
-
-
-<div class="nextup" id="nextup-banner" style="display:none">
-  <span class="nu-label" id="nu-type">Next Up</span>
-  <span class="nu-title" id="nu-title"></span>
-  <span class="nu-countdown" id="nu-countdown"></span>
-</div>
+</nav>
 
 <div class="setup-banner" id="setup-banner" style="display:none">
   <strong>⚙️ Supabase setup needed.</strong> Fill in your credentials in the <code>SUPABASE_CONFIG</code> block at the top of the &lt;script&gt;. Steps:
@@ -338,7 +241,7 @@
 </div>
 
 <div class="hero">
-  <div class="hero-eyebrow">Fall 2026 Season</div>
+  <div class="hero-eyebrow">Spring 2026 Season</div>
   <div class="hero-title">WILD <span>RHINOS</span></div>
   <div class="hero-sub">SAI</div>
   <div class="coaching-strip">
@@ -389,31 +292,6 @@
     <div class="section-top-left"><h2>Upcoming <span>Schedule</span></h2><p>Future fixtures and events</p></div>
     <button class="btn btn-primary" onclick="openModal('add-game')">+ Add Game</button>
   </div>
-
-  <div class="cal-export-card" style="border-radius:var(--radius-lg);padding:16px 20px;margin-bottom:16px;">
-    <div style="font-size:13px;font-weight:600;color:var(--text);margin-bottom:4px;">📅 Add the Full Season to Your Calendar</div>
-    <p style="font-size:12px;color:var(--text3);line-height:1.6;margin-bottom:12px;">Exports every upcoming game and practice — with times and location — in one go.</p>
-    <div style="display:flex;gap:10px;flex-wrap:wrap;">
-      <button class="btn btn-ghost" onclick="downloadScheduleICS()">⬇ Download for Apple Calendar / Outlook</button>
-      <button class="btn btn-ghost" onclick="exportToGoogleCalendar()">Add to Google Calendar</button>
-    </div>
-    <p style="font-size:11px;color:var(--text3);line-height:1.6;margin-top:10px;">
-      <strong style="color:var(--text2)">Apple/Outlook:</strong> a file downloads — open it and your calendar app will ask to add every event.<br>
-      <strong style="color:var(--text2)">Google:</strong> click the button — it downloads the same file <em>and</em> opens Google Calendar's import page for you.
-    </p>
-    <ol id="cal-steps-google" style="display:none;font-size:12px;color:var(--text2);line-height:1.9;margin:12px 0 0 18px;">
-      <li>A file named <strong>WildRhinos-Schedule.ics</strong> just downloaded to your Downloads folder.</li>
-      <li>A new tab just opened to Google Calendar's Import &amp; Export page.</li>
-      <li>In that tab, click <strong>"Select file from your computer"</strong> and choose the file you just downloaded.</li>
-      <li>Choose which calendar to add the events to, then click <strong>Import</strong>.</li>
-    </ol>
-    <div id="cal-steps-mobile" style="display:none;font-size:12px;color:var(--text2);line-height:1.7;margin-top:10px;padding:10px 12px;background:var(--bg3);border-radius:8px;">
-      <strong style="color:var(--orange-light)">Heads up:</strong> Google Calendar's file import only works on a desktop computer — that's a Google limitation on phones, not something this app controls. Your file still downloaded to your phone. Two options:
-      <br>• <strong style="color:var(--text)">Easiest on iPhone:</strong> use the <strong>Apple Calendar / Outlook</strong> button above instead — it works directly on your phone.
-      <br>• <strong style="color:var(--text)">For Google specifically:</strong> open this page on a computer later and click "Add to Google Calendar" there.
-    </div>
-  </div>
-
   <div id="scheduleList"></div>
 </div>
 
@@ -444,13 +322,9 @@
 <div class="section" id="sec-practice">
   <div class="section-top">
     <div class="section-top-left"><h2>Practice <span>Schedule</span></h2><p>Tuesdays &amp; Fridays through end of season</p></div>
-    <button class="btn btn-primary" onclick="openModal('add-practices')">+ Add Practices</button>
   </div>
   <div id="practiceList"></div>
 </div>
-
-</div><!-- /app-main -->
-</div><!-- /app-shell -->
 
 <!-- MODALS -->
 <div class="modal-bg" id="modal-add-player">
@@ -537,21 +411,6 @@
   </div>
 </div>
 
-<div class="modal-bg" id="modal-add-practices">
-  <div class="modal">
-    <h2>Add Practices</h2>
-    <p style="font-size:13px;color:var(--text2);margin-bottom:16px;line-height:1.6;">Fills in every Tuesday and Friday between these two dates, 6:00–7:30 PM. Existing practices already on the schedule won't be duplicated.</p>
-    <div class="field-row">
-      <div class="field"><label>Start Date</label><input id="ap-start" type="date" /></div>
-      <div class="field"><label>End Date</label><input id="ap-end" type="date" /></div>
-    </div>
-    <div class="modal-actions">
-      <button class="btn btn-ghost" onclick="closeModal('modal-add-practices')">Cancel</button>
-      <button class="btn btn-primary" onclick="addPractices()">Generate Practices</button>
-    </div>
-  </div>
-</div>
-
 <div class="modal-bg" id="modal-auth">
   <div class="modal" style="max-width:340px">
     <h2>Admin Access</h2>
@@ -610,14 +469,10 @@ CREATE POLICY "allow_all" ON team_state FOR ALL USING (true) WITH CHECK (true);
 const sb = window.supabase.createClient(SUPABASE_CONFIG.url, SUPABASE_CONFIG.anonKey);
 
 function setSyncStatus(state, label) {
-  ['sync-dot','sync-dot-mobile'].forEach(id=>{
-    const dot = document.getElementById(id);
-    if(dot) dot.className = 'sync-dot' + (state==='syncing'?' syncing':state==='error'?' error':'');
-  });
-  ['sync-label','sync-label-mobile'].forEach(id=>{
-    const lbl = document.getElementById(id);
-    if(lbl) lbl.textContent = label || 'Live';
-  });
+  const dot = document.getElementById('sync-dot');
+  const lbl = document.getElementById('sync-label');
+  dot.className = 'sync-dot' + (state==='syncing'?' syncing':state==='error'?' error':'');
+  if (lbl) lbl.textContent = label || 'Live';
 }
 
 // ── Default data ─────────────────────────────────────────────
@@ -638,7 +493,7 @@ const DEFAULT_PLAYERS = [
   {id:14, name:'Moses',      num:15,  pos:'FW', league:'', apps:0, goals:0, assists:0, yc:0, rc:0, gs:0},
   {id:15, name:'Florence',   num:87,  pos:'MF', league:'', apps:0, goals:0, assists:0, yc:0, rc:0, gs:0},
   {id:16, name:'Liam',       num:null,pos:'DF', league:'', apps:0, goals:0, assists:0, yc:0, rc:0, gs:0},
-  {id:17, name:'Hudson',     num:null,pos:'GK', league:'', apps:0, goals:0, assists:0, yc:0, rc:0, gs:0},
+  {id:17, name:'Hudson',     num:null,pos:'DF', league:'', apps:0, goals:0, assists:0, yc:0, rc:0, gs:0},
 ];
 const DEFAULT_SCHEDULE = [
   {id:1,opponent:'Volley FC',              date:'Mar 22',time:'1:00 PM', ha:'Away',loc:'IAC Field 2',league:'U11/12'},
@@ -779,15 +634,6 @@ const COLORS=[
   {bg:'rgba(251,146,60,0.18)',fg:'#fb923c'},{bg:'rgba(52,211,153,0.15)',fg:'#34d399'},
 ];
 function ac(id){ return COLORS[id%COLORS.length]; }
-function acByPos(pos){
-  switch(String(pos||'').trim().toUpperCase()){
-    case 'FW': return {bg:'rgba(160,66,10,0.28)',fg:'#a0420a'};   // dark orange
-    case 'MF': return {bg:'rgba(138,145,153,0.24)',fg:'#8a9199'}; // gray
-    case 'DF': return {bg:'rgba(20,20,22,0.9)',fg:'#f2f2f0'};     // black
-    case 'GK': return {bg:'rgba(232,98,10,0.24)',fg:'#f47c2a'};   // orange
-    default:   return {bg:'rgba(138,145,153,0.2)',fg:'#b0b8c1'};
-  }
-}
 function initials(n){ return n.split(' ').map(w=>w[0]).join('').toUpperCase().slice(0,2); }
 function result(gf,ga){ return gf>ga?'W':gf<ga?'L':'D'; }
 function playerName(id){ const p=players.find(x=>x.id===id); return p?p.name:'?'; }
@@ -802,7 +648,7 @@ function renderSquad(){
   document.getElementById('sApps').textContent=t.ap;
   const sorted=[...players].sort((a,b)=>a.num!=null&&b.num!=null?a.num-b.num:a.num!=null?-1:b.num!=null?1:0);
   document.getElementById('squadBody').innerHTML=sorted.map(p=>{
-    const c=acByPos(p.pos);
+    const c=ac(p.id);
     return `<tr>
       <td><div class="num-chip">${numDisplay(p.num)}</div></td>
       <td><div class="player-cell"><div class="avatar" style="background:${c.bg};color:${c.fg}">${initials(p.name)}</div>
@@ -853,57 +699,6 @@ function parseGameDate(dateStr){
     return isNaN(d) ? null : d;
   } catch(e){ return null; }
 }
-
-// ── Next Up banner ──────────────────────────────────────────
-function computeNextUp(){
-  const now=new Date();
-  const candidates=[];
-
-  schedule.forEach(g=>{
-    const d=parseGameDate(g.date);
-    if(!d) return;
-    const t=parseClockTime(g.time);
-    if(t) d.setHours(t.h,t.m,0,0); else d.setHours(23,59,0,0);
-    candidates.push({type:'Game',title:(g.ha==='Home'?'vs ':'@ ')+g.opponent,date:d,hasTime:!!t});
-  });
-
-  practices.forEach(p=>{
-    if(p.canceled) return;
-    const d=parseGameDate(p.month+' '+p.day);
-    if(!d) return;
-    const t=parseTimeRange(p.time).start;
-    if(t) d.setHours(t.h,t.m,0,0); else d.setHours(18,0,0,0);
-    candidates.push({type:'Practice',title:'Team Practice',date:d,hasTime:true});
-  });
-
-  const upcoming=candidates.filter(c=>c.date>=now).sort((a,b)=>a.date-b.date);
-  return upcoming[0]||null;
-}
-
-function countdownText(target){
-  const diffMs=target-new Date();
-  if(diffMs<=0) return 'Happening now';
-  const diffMin=Math.round(diffMs/60000);
-  const days=Math.floor(diffMin/1440);
-  const hours=Math.floor((diffMin%1440)/60);
-  const mins=diffMin%60;
-  if(days>0) return days+'d '+hours+'h';
-  if(hours>0) return hours+'h '+mins+'m';
-  return mins+' min';
-}
-
-function renderNextUp(){
-  const banner=document.getElementById('nextup-banner');
-  if(!banner) return;
-  const next=computeNextUp();
-  if(!next){ banner.style.display='none'; return; }
-  banner.style.display='flex';
-  document.getElementById('nu-type').textContent='Next '+next.type;
-  const dateLabel=next.date.toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric'})+(next.hasTime?' · '+next.date.toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit'}):'');
-  document.getElementById('nu-title').textContent=next.title+' — '+dateLabel;
-  document.getElementById('nu-countdown').textContent=countdownText(next.date);
-}
-
 function renderSchedule(){
   const today = new Date(); today.setHours(0,0,0,0);
   const upcoming = schedule.filter(g=>{
@@ -933,7 +728,7 @@ function renderLeaders(){
   const maxA=Math.max(1,...players.map(p=>p.assists));
   const maxAp=Math.max(1,...players.map(p=>p.apps));
   const lrow=(p,val,max,rank)=>{
-    const c=acByPos(p.pos);const pct=Math.round((val/max)*100);
+    const c=ac(p.id);const pct=Math.round((val/max)*100);
     return `<div class="leader-row">
       <div class="leader-rank${rank===1?' gold':''}">${rank}</div>
       <div class="avatar" style="background:${c.bg};color:${c.fg};width:28px;height:28px;font-size:10px;flex-shrink:0">${initials(p.name)}</div>
@@ -975,14 +770,7 @@ function renderPractice(){
     list.innerHTML='<div class="empty-state"><div class="icon">🏃</div><p>No upcoming practices — season complete!</p></div>';
     return;
   }
-  list.innerHTML=upcoming.map(p=>{
-    const attending=Array.isArray(p.attending)?p.attending:[];
-    const isOpen=expandedRSVP.has(p.id);
-    const chips=players.map(pl=>{
-      const isIn=attending.includes(pl.id);
-      return `<button type="button" class="rsvp-chip${isIn?' is-in':''}" onclick="toggleRSVP(${p.id},${pl.id})">${isIn?'✓ ':''}${pl.name}</button>`;
-    }).join('');
-    return `
+  list.innerHTML=upcoming.map(p=>`
     <div class="schedule-card" style="${p.canceled?'opacity:0.5':''}">
       <div class="sched-date-block"><div class="sched-month">${p.month}</div><div class="sched-day">${p.day}</div></div>
       <div class="sched-info">
@@ -992,15 +780,10 @@ function renderPractice(){
         <div class="sched-meta">${p.weekday} · ${p.time||'6:00 PM'}</div>
       </div>
       <button class="btn btn-ghost" style="font-size:11px;padding:5px 12px" onclick="toggleCancel(${p.id})">${p.canceled?'Restore':'Cancel'}</button>
-      <div style="flex-basis:100%">
-        <button type="button" class="rsvp-toggle-btn" onclick="toggleRSVPPanel(${p.id})">RSVP (${attending.length}/${players.length}) ${isOpen?'▲':'▼'}</button>
-        ${isOpen?`<div class="rsvp-wrap">${chips}</div>`:''}
-      </div>
-    </div>`;
-  }).join('');
+    </div>`).join('');
 }
 
-function renderAll(){ renderSquad();renderMatches();renderSchedule();renderLeaders();renderVideos();renderPractice();renderNextUp(); }
+function renderAll(){ renderSquad();renderMatches();renderSchedule();renderLeaders();renderVideos();renderPractice(); }
 
 // ── Mutations ────────────────────────────────────────────────
 function addPlayer(){
@@ -1052,128 +835,6 @@ function addMatch(){
   saveAll();
 }
 
-// ── Calendar export (Apple/Outlook .ics + Google Calendar) ────
-const CAL_MONTH_IDX={Jan:0,Feb:1,Mar:2,Apr:3,May:4,Jun:5,Jul:6,Aug:7,Sep:8,Oct:9,Nov:10,Dec:11};
-const CAL_SEASON_YEAR=2026; // matches the year assumed elsewhere in the app's date parsing
-const CAL_PRACTICE_LOCATION='11801 E 32nd St S, Independence, MO 64052';
-
-function pad2(n){ return String(n).padStart(2,'0'); }
-
-function icsEscape(str){
-  return String(str||'').replace(/\\/g,'\\\\').replace(/;/g,'\\;').replace(/,/g,'\\,').replace(/\n/g,'\\n');
-}
-
-function parseClockTime(str){
-  // "6:00 PM" -> {h:18,m:0}; returns null if it can't find a time
-  const m=String(str||'').match(/(\d{1,2}):(\d{2})\s*([AaPp][Mm])/);
-  if(!m) return null;
-  let h=parseInt(m[1],10);
-  const min=parseInt(m[2],10);
-  const ap=m[3].toUpperCase();
-  if(ap==='PM'&&h!==12) h+=12;
-  if(ap==='AM'&&h===12) h=0;
-  return {h,m:min};
-}
-
-function parseTimeRange(str){
-  // "6:00 PM - 7:30 PM" -> {start:{h,m}, end:{h,m}}; "6:00 PM" -> {start:{h,m}, end:null}
-  const parts=String(str||'').split(/-|–/);
-  return { start:parseClockTime(parts[0]), end: parts[1]?parseClockTime(parts[1]):null };
-}
-
-function icsDateTime(monthAbbr,day,hm){
-  const mi=CAL_MONTH_IDX[monthAbbr];
-  if(mi===undefined||!hm) return null;
-  const d=pad2(parseInt(day,10));
-  return `${CAL_SEASON_YEAR}${pad2(mi+1)}${d}T${pad2(hm.h)}${pad2(hm.m)}00`;
-}
-
-function buildScheduleICS(){
-  const lines=['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//Wild Rhinos Team Hub//EN','CALSCALE:GREGORIAN','METHOD:PUBLISH'];
-  const dtstamp=new Date().toISOString().replace(/[-:]/g,'').split('.')[0]+'Z';
-
-  schedule.forEach(g=>{
-    const dateParts=String(g.date||'').trim().split(' ');
-    if(dateParts.length<2) return; // skip games without a real date (e.g. "TBD")
-    const [monthAbbr,day]=dateParts;
-    const start=parseClockTime(g.time)||{h:9,m:0};
-    let endH=start.h+1, endM=start.m+30;
-    if(endM>=60){ endM-=60; endH+=1; }
-    const startStr=icsDateTime(monthAbbr,day,start);
-    const endStr=icsDateTime(monthAbbr,day,{h:endH%24,m:endM});
-    if(!startStr||!endStr) return;
-    lines.push('BEGIN:VEVENT');
-    lines.push('UID:game-'+g.id+'@wildrhinos-teamhub');
-    lines.push('DTSTAMP:'+dtstamp);
-    lines.push('DTSTART:'+startStr);
-    lines.push('DTEND:'+endStr);
-    lines.push('SUMMARY:'+icsEscape((g.ha==='Home'?'vs ':'@ ')+g.opponent));
-    if(g.loc) lines.push('LOCATION:'+icsEscape(g.loc));
-    lines.push('DESCRIPTION:'+icsEscape([g.league,g.ha?g.ha+' game':''].filter(Boolean).join(' — ')));
-    lines.push('END:VEVENT');
-  });
-
-  practices.forEach(p=>{
-    if(p.canceled) return;
-    const range=parseTimeRange(p.time);
-    const start=range.start||{h:18,m:0};
-    const end=range.end||{h:19,m:30};
-    const startStr=icsDateTime(p.month,p.day,start);
-    const endStr=icsDateTime(p.month,p.day,end);
-    if(!startStr||!endStr) return;
-    lines.push('BEGIN:VEVENT');
-    lines.push('UID:practice-'+p.id+'@wildrhinos-teamhub');
-    lines.push('DTSTAMP:'+dtstamp);
-    lines.push('DTSTART:'+startStr);
-    lines.push('DTEND:'+endStr);
-    lines.push('SUMMARY:'+icsEscape('Wild Rhinos Practice'));
-    lines.push('LOCATION:'+icsEscape(CAL_PRACTICE_LOCATION));
-    lines.push('END:VEVENT');
-  });
-
-  lines.push('END:VCALENDAR');
-  return lines.join('\r\n');
-}
-
-function downloadScheduleICS(){
-  const ics=buildScheduleICS();
-  const blob=new Blob([ics],{type:'text/calendar;charset=utf-8'});
-  const url=URL.createObjectURL(blob);
-  const a=document.createElement('a');
-  a.href=url;
-  a.download='WildRhinos-Schedule.ics';
-  document.body.appendChild(a);
-  a.click();
-  document.body.removeChild(a);
-  setTimeout(()=>URL.revokeObjectURL(url),1000);
-}
-
-function isMobileDevice(){
-  return /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-}
-
-function exportToGoogleCalendar(){
-  const steps=document.getElementById('cal-steps-google');
-  const mobileNote=document.getElementById('cal-steps-mobile');
-
-  if(isMobileDevice()){
-    // Google Calendar's import tool only exists on desktop — it doesn't work on
-    // any phone browser or the Google Calendar app itself, so don't send people
-    // to a page that can't do anything for them.
-    downloadScheduleICS();
-    if(steps) steps.style.display='none';
-    if(mobileNote) mobileNote.style.display='block';
-    return;
-  }
-
-  // Open the tab FIRST and synchronously — any delay (even a setTimeout) makes
-  // Safari/Chrome treat it as a blocked popup instead of a real user action.
-  window.open('https://calendar.google.com/calendar/r/settings/export','_blank');
-  downloadScheduleICS();
-  if(mobileNote) mobileNote.style.display='none';
-  if(steps) steps.style.display='block';
-}
-
 function addGame(){
   const opp=document.getElementById('fg-opp').value.trim(); if(!opp) return;
   const date=document.getElementById('fg-date').value.trim()||'TBD';
@@ -1201,64 +862,11 @@ function addVideo(){
   saveAll();
 }
 
-function addPractices(){
-  const startVal=document.getElementById('ap-start').value;
-  const endVal=document.getElementById('ap-end').value;
-  if(!startVal||!endVal){ alert('Pick both a start and end date.'); return; }
-  const start=new Date(startVal+'T00:00:00');
-  const end=new Date(endVal+'T00:00:00');
-  if(end<start){ alert('End date must be on or after the start date.'); return; }
-
-  const existingKeys=new Set(practices.map(p=>p.month+' '+p.day));
-  let nextPracId=practices.length?Math.max(...practices.map(p=>p.id))+1:1;
-  let added=0;
-  const cursor=new Date(start);
-  while(cursor<=end){
-    const dow=cursor.getDay(); // 2 = Tuesday, 5 = Friday
-    if(dow===2||dow===5){
-      const month=cursor.toLocaleString('en-US',{month:'short'});
-      const day=String(cursor.getDate());
-      const key=month+' '+day;
-      if(!existingKeys.has(key)){
-        practices.push({id:nextPracId++,month,day,weekday:dow===2?'Tuesday':'Friday',time:'6:00 PM - 7:30 PM',canceled:false});
-        existingKeys.add(key);
-        added++;
-      }
-    }
-    cursor.setDate(cursor.getDate()+1);
-  }
-
-  closeModal('modal-add-practices');
-  document.getElementById('ap-start').value='';
-  document.getElementById('ap-end').value='';
-  renderPractice();
-  saveAll();
-  if(!added) alert('No new practices added — those Tuesdays/Fridays are already on the schedule.');
-}
-
 function toggleCancel(id){
   requireAuth(()=>{
     const p=practices.find(x=>x.id===id);
     if(p){ p.canceled=!p.canceled; saveAll(); }
   });
-}
-
-// ── RSVP (open to anyone, no admin password) ──────────────────
-let expandedRSVP=new Set();
-
-function toggleRSVPPanel(pracId){
-  if(expandedRSVP.has(pracId)) expandedRSVP.delete(pracId); else expandedRSVP.add(pracId);
-  renderPractice();
-}
-
-function toggleRSVP(pracId,playerId){
-  const p=practices.find(x=>x.id===pracId);
-  if(!p) return;
-  if(!Array.isArray(p.attending)) p.attending=[];
-  const idx=p.attending.indexOf(playerId);
-  if(idx>=0) p.attending.splice(idx,1); else p.attending.push(playerId);
-  renderPractice();
-  saveAll();
 }
 
 // ── localStorage fallback ────────────────────────────────────
@@ -1372,7 +980,6 @@ function undoLastMatch(){
 })();
 startListening();
 setTimeout(hideLoader, 8000); // safety fallback in case of an unexpected error
-setInterval(renderNextUp, 60000); // keep the Next Up countdown ticking
 </script>
 </body>
 </html>
