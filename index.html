@@ -67,12 +67,28 @@
   html { scroll-behavior: smooth; }
   body { font-family: 'Barlow', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
 
-  nav { position: sticky; top: 0; z-index: 100; background: var(--glass-bg-strong); backdrop-filter: blur(24px) saturate(180%); -webkit-backdrop-filter: blur(24px) saturate(180%); border-bottom: 1px solid var(--glass-border); box-shadow: var(--glass-shadow); padding: 0 24px; display: flex; align-items: center; justify-content: space-between; height: 58px; }
-  .nav-brand { font-family: 'Barlow Condensed', sans-serif; font-weight: 800; font-size: 22px; letter-spacing: 1px; color: var(--orange); display: flex; align-items: center; gap: 8px; }
-  .nav-links { display: flex; gap: 4px; }
-  .nav-link { padding: 6px 14px; font-size: 13px; font-weight: 500; color: var(--text2); border-radius: 6px; cursor: pointer; transition: all 0.15s; border: none; background: none; font-family: 'Barlow', sans-serif; }
-  .nav-link:hover { color: var(--text); background: var(--surface); }
-  .nav-link.active { color: var(--orange); background: rgba(232,98,10,0.12); }
+  .app-shell { display: flex; min-height: 100vh; align-items: stretch; }
+  .app-main { flex: 1; min-width: 0; }
+  .sidebar { width: 220px; flex-shrink: 0; position: sticky; top: 0; align-self: flex-start; height: 100vh; display: flex; flex-direction: column; padding: 22px 14px; gap: 8px; background: var(--glass-bg-strong); backdrop-filter: blur(24px) saturate(180%); -webkit-backdrop-filter: blur(24px) saturate(180%); border-right: 1px solid var(--glass-border); box-shadow: var(--glass-shadow); z-index: 150; }
+  .sidebar-brand { display: flex; align-items: center; justify-content: center; padding: 6px 0 22px; }
+  .sidebar-nav { display: flex; flex-direction: column; gap: 6px; flex: 1; }
+  .nav-link { display: flex; align-items: center; gap: 12px; padding: 11px 14px; border-radius: 12px; background: transparent; border: none; color: var(--text2); font-family: 'Barlow', sans-serif; font-size: 14px; font-weight: 600; cursor: pointer; text-align: left; transition: all 0.15s; width: 100%; }
+  .nav-link .nav-icon { font-size: 17px; line-height: 1; }
+  .nav-link:hover { color: var(--text); background: var(--glass-bg); }
+  .nav-link.active { color: #fff; background: linear-gradient(135deg, rgba(232,98,10,0.85), rgba(160,66,10,0.85)); box-shadow: 0 4px 16px rgba(232,98,10,0.35), inset 0 1px 0 rgba(255,255,255,0.3); }
+  .sidebar-footer { display: flex; flex-direction: column; gap: 10px; padding-top: 12px; border-top: 1px solid var(--border); }
+  .utility-bar { display: none; align-items: center; justify-content: center; gap: 14px; padding: 14px 16px 0; flex-wrap: wrap; }
+
+  @media (max-width: 900px) {
+    .app-shell { flex-direction: column; }
+    .sidebar { position: fixed; bottom: 0; left: 0; right: 0; top: auto; width: 100%; height: auto; flex-direction: row; align-items: center; padding: 6px 4px calc(6px + env(safe-area-inset-bottom)); border-right: none; border-top: 1px solid var(--glass-border); z-index: 300; }
+    .sidebar-brand, .sidebar-footer { display: none; }
+    .sidebar-nav { flex-direction: row; justify-content: space-around; width: 100%; gap: 2px; }
+    .nav-link { flex-direction: column; gap: 3px; padding: 6px 2px; font-size: 9.5px; border-radius: 10px; flex: 1; align-items: center; letter-spacing: 0; }
+    .nav-link .nav-icon { font-size: 19px; }
+    .app-main { padding-bottom: 74px; }
+    .utility-bar { display: flex; }
+  }
 
   #reset-data-btn:hover { background: rgba(248,113,113,0.2) !important; border-color: rgba(248,113,113,0.5) !important; }
   .sync-dot { width: 7px; height: 7px; border-radius: 50%; background: #4ade80; display: inline-block; margin-left: 6px; vertical-align: middle; }
@@ -171,11 +187,11 @@
   .cal-export-card { position: relative; background: var(--glass-bg); border: 1px solid var(--glass-border); backdrop-filter: blur(20px) saturate(180%); -webkit-backdrop-filter: blur(20px) saturate(180%); box-shadow: var(--glass-shadow); overflow: hidden; }
 
   /* Liquid Glass specular sheen — shared across all glass surfaces */
-  nav::before, .stat-box::before, .match-card::before, .schedule-card::before, .video-card::before,
+  .sidebar::before, .stat-box::before, .match-card::before, .schedule-card::before, .video-card::before,
   .modal::before, .btn-primary::before, .btn-ghost::before, .cal-export-card::before {
     content: ''; position: absolute; inset: 0; background: var(--glass-sheen); pointer-events: none; z-index: 0; border-radius: inherit;
   }
-  nav > * , .stat-box > *, .match-card > *, .schedule-card > *, .video-card > *, .modal > *, .cal-export-card > * { position: relative; z-index: 1; }
+  .sidebar > * , .stat-box > *, .match-card > *, .schedule-card > *, .video-card > *, .modal > *, .cal-export-card > * { position: relative; z-index: 1; }
   .video-embed { position: relative; padding-top: 56.25%; background: var(--bg3); box-shadow: inset 0 0 40px rgba(232,98,10,0.08); }
   .video-embed iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: none; }
   .video-info { padding: 12px 14px; }
@@ -234,7 +250,6 @@
     .stats-row { grid-template-columns: repeat(2, 1fr); }
     .leader-grid { grid-template-columns: 1fr; }
     .record-item { padding: 10px 16px; }
-    .nav-link { padding: 6px 8px; font-size: 11px; }
     .hero { padding: 36px 16px 28px; }
     .section { padding: 24px 16px; }
     .field-row { grid-template-columns: 1fr; }
@@ -268,27 +283,42 @@
   <div class="loader-bar"></div>
 </div>
 
-<nav>
-  <div class="nav-brand"><img id="nav-logo" src="" alt="Wild Rhinos" style="height:40px;width:auto;object-fit:contain;filter:drop-shadow(0 0 12px rgba(232,98,10,0.5));" /></div>
-  <div class="nav-links">
-    <button class="nav-link active" onclick="showSection('squad')">Squad</button>
-    <button class="nav-link" onclick="showSection('matches')">Matches</button>
-    <button class="nav-link" onclick="showSection('schedule')">Schedule</button>
-    <button class="nav-link" onclick="showSection('leaders')">Player Stats</button>
-    <button class="nav-link" onclick="showSection('videos')">Videos</button>
-    <button class="nav-link" onclick="showSection('practice')">Practice</button>
-  </div>
-  <div style="display:flex;align-items:center;gap:14px;">
+<div class="app-shell">
+<aside class="sidebar">
+  <div class="sidebar-brand"><img id="nav-logo" src="" alt="Wild Rhinos" style="height:38px;width:auto;object-fit:contain;filter:drop-shadow(0 0 12px rgba(232,98,10,0.5));" /></div>
+  <nav class="sidebar-nav">
+    <button class="nav-link active" onclick="showSection('squad')"><span class="nav-icon">👥</span><span class="nav-label">Squad</span></button>
+    <button class="nav-link" onclick="showSection('matches')"><span class="nav-icon">⚽</span><span class="nav-label">Matches</span></button>
+    <button class="nav-link" onclick="showSection('schedule')"><span class="nav-icon">📅</span><span class="nav-label">Schedule</span></button>
+    <button class="nav-link" onclick="showSection('leaders')"><span class="nav-icon">🏆</span><span class="nav-label">Stats</span></button>
+    <button class="nav-link" onclick="showSection('videos')"><span class="nav-icon">🎥</span><span class="nav-label">Videos</span></button>
+    <button class="nav-link" onclick="showSection('practice')"><span class="nav-icon">🏃</span><span class="nav-label">Practice</span></button>
+  </nav>
+  <div class="sidebar-footer">
     <button id="reset-data-btn" onclick="requireAuth(resetSeasonData)" title="Clear player stats, videos, practices, schedule, and matches (admin only)"
-      style="padding:6px 12px;font-size:11px;font-weight:600;color:#f87171;background:rgba(248,113,113,0.1);border:1px solid rgba(248,113,113,0.3);border-radius:6px;cursor:pointer;font-family:'Barlow',sans-serif;transition:all 0.15s;">
+      style="padding:6px 12px;font-size:11px;font-weight:600;color:#f87171;background:rgba(248,113,113,0.1);border:1px solid rgba(248,113,113,0.3);border-radius:6px;cursor:pointer;font-family:'Barlow',sans-serif;transition:all 0.15s;width:100%;">
       Reset Data
     </button>
-    <div style="display:flex;align-items:center;gap:6px;font-size:11px;color:var(--text3)" title="Supabase sync status">
+    <div style="display:flex;align-items:center;justify-content:center;gap:6px;font-size:11px;color:var(--text3)" title="Supabase sync status">
       <span id="sync-label">Live</span>
       <span class="sync-dot syncing" id="sync-dot"></span>
     </div>
   </div>
-</nav>
+</aside>
+
+<div class="app-main">
+
+<div class="utility-bar">
+  <button onclick="requireAuth(resetSeasonData)" title="Clear player stats, videos, practices, schedule, and matches (admin only)"
+    style="padding:6px 12px;font-size:11px;font-weight:600;color:#f87171;background:rgba(248,113,113,0.1);border:1px solid rgba(248,113,113,0.3);border-radius:6px;cursor:pointer;font-family:'Barlow',sans-serif;">
+    Reset Data
+  </button>
+  <div style="display:flex;align-items:center;gap:6px;font-size:11px;color:var(--text3)" title="Supabase sync status">
+    <span id="sync-label-mobile">Live</span>
+    <span class="sync-dot syncing" id="sync-dot-mobile"></span>
+  </div>
+</div>
+
 
 <div class="nextup" id="nextup-banner" style="display:none">
   <span class="nu-label" id="nu-type">Next Up</span>
@@ -417,6 +447,9 @@
   </div>
   <div id="practiceList"></div>
 </div>
+
+</div><!-- /app-main -->
+</div><!-- /app-shell -->
 
 <!-- MODALS -->
 <div class="modal-bg" id="modal-add-player">
@@ -576,10 +609,14 @@ CREATE POLICY "allow_all" ON team_state FOR ALL USING (true) WITH CHECK (true);
 const sb = window.supabase.createClient(SUPABASE_CONFIG.url, SUPABASE_CONFIG.anonKey);
 
 function setSyncStatus(state, label) {
-  const dot = document.getElementById('sync-dot');
-  const lbl = document.getElementById('sync-label');
-  dot.className = 'sync-dot' + (state==='syncing'?' syncing':state==='error'?' error':'');
-  if (lbl) lbl.textContent = label || 'Live';
+  ['sync-dot','sync-dot-mobile'].forEach(id=>{
+    const dot = document.getElementById(id);
+    if(dot) dot.className = 'sync-dot' + (state==='syncing'?' syncing':state==='error'?' error':'');
+  });
+  ['sync-label','sync-label-mobile'].forEach(id=>{
+    const lbl = document.getElementById(id);
+    if(lbl) lbl.textContent = label || 'Live';
+  });
 }
 
 // ── Default data ─────────────────────────────────────────────
