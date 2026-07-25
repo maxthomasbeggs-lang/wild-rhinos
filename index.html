@@ -781,10 +781,10 @@ const COLORS=[
 function ac(id){ return COLORS[id%COLORS.length]; }
 function acByPos(pos){
   switch(String(pos||'').trim().toUpperCase()){
-    case 'FW': return {bg:'rgba(248,113,113,0.24)',fg:'#f87171'}; // red
-    case 'MF': return {bg:'rgba(96,165,250,0.24)',fg:'#60a5fa'};  // blue
-    case 'DF': return {bg:'rgba(74,222,128,0.22)',fg:'#4ade80'};  // green
-    case 'GK': return {bg:'rgba(255,255,255,0.95)',fg:'#1a1a1a'}; // white
+    case 'FW': return {bg:'rgba(160,66,10,0.28)',fg:'#a0420a'};   // dark orange
+    case 'MF': return {bg:'rgba(138,145,153,0.24)',fg:'#8a9199'}; // gray
+    case 'DF': return {bg:'rgba(20,20,22,0.9)',fg:'#f2f2f0'};     // black
+    case 'GK': return {bg:'rgba(232,98,10,0.24)',fg:'#f47c2a'};   // orange
     default:   return {bg:'rgba(138,145,153,0.2)',fg:'#b0b8c1'};
   }
 }
