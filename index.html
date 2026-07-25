@@ -33,6 +33,11 @@
     --nav-bg: rgba(13,13,13,0.94);
     --radius: 10px;
     --radius-lg: 16px;
+    --glass-bg: rgba(40,40,42,0.45);
+    --glass-bg-strong: rgba(50,50,53,0.55);
+    --glass-border: rgba(255,255,255,0.22);
+    --glass-sheen: linear-gradient(115deg, rgba(255,255,255,0.22) 0%, rgba(255,255,255,0.05) 30%, rgba(255,255,255,0) 55%);
+    --glass-shadow: 0 8px 32px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.16);
   }
 
   /* ── Light mode ──────────────────────────────────────────── */
@@ -51,13 +56,18 @@
       --hero-grad1: #ffe3c2;
       --hero-grad2: #ffd3a0;
       --nav-bg: rgba(255,255,255,0.9);
+      --glass-bg: rgba(255,255,255,0.45);
+      --glass-bg-strong: rgba(255,255,255,0.6);
+      --glass-border: rgba(255,255,255,0.6);
+      --glass-sheen: linear-gradient(115deg, rgba(255,255,255,0.65) 0%, rgba(255,255,255,0.15) 30%, rgba(255,255,255,0) 55%);
+      --glass-shadow: 0 8px 32px rgba(30,20,10,0.14), inset 0 1px 0 rgba(255,255,255,0.7);
     }
   }
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   html { scroll-behavior: smooth; }
   body { font-family: 'Barlow', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
 
-  nav { position: sticky; top: 0; z-index: 100; background: var(--nav-bg); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 0 24px; display: flex; align-items: center; justify-content: space-between; height: 58px; }
+  nav { position: sticky; top: 0; z-index: 100; background: var(--glass-bg-strong); backdrop-filter: blur(24px) saturate(180%); -webkit-backdrop-filter: blur(24px) saturate(180%); border-bottom: 1px solid var(--glass-border); box-shadow: var(--glass-shadow); padding: 0 24px; display: flex; align-items: center; justify-content: space-between; height: 58px; }
   .nav-brand { font-family: 'Barlow Condensed', sans-serif; font-weight: 800; font-size: 22px; letter-spacing: 1px; color: var(--orange); display: flex; align-items: center; gap: 8px; }
   .nav-links { display: flex; gap: 4px; }
   .nav-link { padding: 6px 14px; font-size: 13px; font-weight: 500; color: var(--text2); border-radius: 6px; cursor: pointer; transition: all 0.15s; border: none; background: none; font-family: 'Barlow', sans-serif; }
@@ -100,7 +110,7 @@
   .section { padding: 40px 24px; max-width: 960px; margin: 0 auto; display: none; }
   .section.active { display: block; }
   .stats-row { display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: 10px; margin-bottom: 28px; }
-  .stat-box { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 14px 16px; }
+  .stat-box { position: relative; background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: var(--radius); padding: 14px 16px; backdrop-filter: blur(20px) saturate(180%); -webkit-backdrop-filter: blur(20px) saturate(180%); box-shadow: var(--glass-shadow); overflow: hidden; }
   .stat-box .lbl { font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--text3); font-weight: 600; margin-bottom: 6px; }
   .stat-box .val { font-family: 'Barlow Condensed', sans-serif; font-size: 32px; font-weight: 700; line-height: 1; color: var(--orange); }
 
@@ -119,7 +129,7 @@
   .badge-yc { background: rgba(240,180,41,0.15); color: #f0b429; }
   .badge-rc { background: rgba(248,113,113,0.15); color: #f87171; }
 
-  .match-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 16px 20px; margin-bottom: 10px; display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; transition: border-color 0.15s; }
+  .match-card { position: relative; background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: var(--radius-lg); padding: 16px 20px; margin-bottom: 10px; display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; transition: border-color 0.15s; backdrop-filter: blur(20px) saturate(180%); -webkit-backdrop-filter: blur(20px) saturate(180%); box-shadow: var(--glass-shadow); overflow: hidden; }
   .match-card:hover { border-color: var(--border2); }
   .match-vs { font-size: 12px; color: var(--text3); margin-bottom: 3px; text-transform: uppercase; letter-spacing: 1px; }
   .match-opp { font-size: 16px; font-weight: 600; }
@@ -133,7 +143,7 @@
   .match-scorers { margin-top: 5px; font-size: 12px; color: var(--text3); }
   .match-scorers span { color: var(--text2); }
 
-  .schedule-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 16px 20px; margin-bottom: 10px; display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+  .schedule-card { position: relative; background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: var(--radius-lg); padding: 16px 20px; margin-bottom: 10px; display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; backdrop-filter: blur(20px) saturate(180%); -webkit-backdrop-filter: blur(20px) saturate(180%); box-shadow: var(--glass-shadow); overflow: hidden; }
   .sched-date-block { background: var(--bg3); border: 1px solid var(--border); border-radius: var(--radius); padding: 8px 14px; text-align: center; min-width: 56px; flex-shrink: 0; }
   .sched-month { font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--text3); font-weight: 600; }
   .sched-day { font-family: 'Barlow Condensed', sans-serif; font-size: 28px; font-weight: 800; line-height: 1; color: var(--orange); }
@@ -155,22 +165,31 @@
   .leader-bar { height: 3px; background: var(--orange); border-radius: 2px; }
 
   .video-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 16px; }
-  .video-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); overflow: hidden; }
+  .video-card { position: relative; background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: var(--radius-lg); overflow: hidden; backdrop-filter: blur(20px) saturate(180%); -webkit-backdrop-filter: blur(20px) saturate(180%); box-shadow: var(--glass-shadow); }
+
+  .cal-export-card { position: relative; background: var(--glass-bg); border: 1px solid var(--glass-border); backdrop-filter: blur(20px) saturate(180%); -webkit-backdrop-filter: blur(20px) saturate(180%); box-shadow: var(--glass-shadow); overflow: hidden; }
+
+  /* Liquid Glass specular sheen — shared across all glass surfaces */
+  nav::before, .stat-box::before, .match-card::before, .schedule-card::before, .video-card::before,
+  .modal::before, .btn-primary::before, .btn-ghost::before, .cal-export-card::before {
+    content: ''; position: absolute; inset: 0; background: var(--glass-sheen); pointer-events: none; z-index: 0; border-radius: inherit;
+  }
+  nav > * , .stat-box > *, .match-card > *, .schedule-card > *, .video-card > *, .modal > *, .cal-export-card > * { position: relative; z-index: 1; }
   .video-embed { position: relative; padding-top: 56.25%; background: var(--bg3); }
   .video-embed iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: none; }
   .video-info { padding: 12px 14px; }
   .video-title { font-weight: 600; font-size: 14px; margin-bottom: 3px; }
   .video-date { font-size: 12px; color: var(--text3); }
 
-  .btn { padding: 9px 20px; font-size: 13px; font-weight: 600; border-radius: var(--radius); border: none; cursor: pointer; transition: all 0.15s; font-family: 'Barlow', sans-serif; letter-spacing: 0.3px; }
-  .btn-primary { background: var(--orange); color: white; }
-  .btn-primary:hover { background: var(--orange-light); }
-  .btn-ghost { background: transparent; color: var(--text2); border: 1px solid var(--border2); }
-  .btn-ghost:hover { background: var(--surface); color: var(--text); }
+  .btn { position: relative; padding: 9px 20px; font-size: 13px; font-weight: 600; border-radius: 20px; border: none; cursor: pointer; transition: all 0.15s; font-family: 'Barlow', sans-serif; letter-spacing: 0.3px; overflow: hidden; }
+  .btn-primary { background: linear-gradient(135deg, rgba(232,98,10,0.85), rgba(160,66,10,0.85)); color: white; border: 1px solid rgba(255,255,255,0.3); backdrop-filter: blur(16px) saturate(180%); -webkit-backdrop-filter: blur(16px) saturate(180%); box-shadow: 0 4px 16px rgba(232,98,10,0.35), inset 0 1px 0 rgba(255,255,255,0.35); }
+  .btn-primary:hover { background: linear-gradient(135deg, rgba(244,124,42,0.9), rgba(232,98,10,0.9)); box-shadow: 0 6px 20px rgba(232,98,10,0.45), inset 0 1px 0 rgba(255,255,255,0.45); }
+  .btn-ghost { background: var(--glass-bg); color: var(--text2); border: 1px solid var(--glass-border); backdrop-filter: blur(16px) saturate(180%); -webkit-backdrop-filter: blur(16px) saturate(180%); box-shadow: inset 0 1px 0 rgba(255,255,255,0.14); }
+  .btn-ghost:hover { background: var(--glass-bg-strong); color: var(--text); }
 
-  .modal-bg { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.75); z-index: 200; align-items: center; justify-content: center; padding: 16px; }
+  .modal-bg { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.55); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); z-index: 200; align-items: center; justify-content: center; padding: 16px; }
   .modal-bg.open { display: flex; }
-  .modal { background: var(--bg2); border: 1px solid var(--border2); border-radius: var(--radius-lg); padding: 24px; width: 100%; max-width: 480px; max-height: 95vh; overflow-y: auto; }
+  .modal { position: relative; background: var(--glass-bg-strong); border: 1px solid var(--glass-border); border-radius: var(--radius-lg); padding: 24px; width: 100%; max-width: 480px; max-height: 95vh; overflow-y: auto; backdrop-filter: blur(28px) saturate(180%); -webkit-backdrop-filter: blur(28px) saturate(180%); box-shadow: var(--glass-shadow); }
   .modal h2 { font-family: 'Barlow Condensed', sans-serif; font-size: 22px; font-weight: 700; margin-bottom: 20px; }
   .field { margin-bottom: 14px; }
   .field label { display: block; font-size: 10px; letter-spacing: 1px; text-transform: uppercase; color: var(--text3); font-weight: 600; margin-bottom: 6px; }
@@ -200,7 +219,7 @@
   .rsvp-toggle-btn { font-size: 12px; color: var(--text3); cursor: pointer; background: none; border: none; padding: 0; margin-top: 8px; font-family: 'Barlow', sans-serif; }
   .rsvp-toggle-btn:hover { color: var(--orange); }
   .rsvp-wrap { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--border); width: 100%; }
-  .rsvp-chip { display: inline-flex; align-items: center; gap: 6px; padding: 6px 12px; border-radius: 20px; border: 1px solid var(--border2); background: var(--bg3); color: var(--text2); font-size: 12px; font-weight: 600; cursor: pointer; transition: all 0.15s; user-select: none; font-family: 'Barlow', sans-serif; }
+  .rsvp-chip { display: inline-flex; align-items: center; gap: 6px; padding: 6px 12px; border-radius: 20px; border: 1px solid var(--glass-border); background: var(--glass-bg); color: var(--text2); font-size: 12px; font-weight: 600; cursor: pointer; transition: all 0.15s; user-select: none; font-family: 'Barlow', sans-serif; backdrop-filter: blur(14px) saturate(180%); -webkit-backdrop-filter: blur(14px) saturate(180%); box-shadow: inset 0 1px 0 rgba(255,255,255,0.14); }
   .rsvp-chip:hover { border-color: var(--orange); }
   .rsvp-chip.is-in { background: rgba(74,222,128,0.15); border-color: rgba(74,222,128,0.4); color: #4ade80; }
   .section-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; flex-wrap: wrap; gap: 12px; }
@@ -339,7 +358,7 @@
     <button class="btn btn-primary" onclick="openModal('add-game')">+ Add Game</button>
   </div>
 
-  <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:16px 20px;margin-bottom:16px;">
+  <div class="cal-export-card" style="border-radius:var(--radius-lg);padding:16px 20px;margin-bottom:16px;">
     <div style="font-size:13px;font-weight:600;color:var(--text);margin-bottom:4px;">📅 Add the Full Season to Your Calendar</div>
     <p style="font-size:12px;color:var(--text3);line-height:1.6;margin-bottom:12px;">Exports every upcoming game and practice — with times and location — in one go.</p>
     <div style="display:flex;gap:10px;flex-wrap:wrap;">
